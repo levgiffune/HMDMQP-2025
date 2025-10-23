@@ -1,0 +1,16 @@
+# ToDo
+- Compass
+    - Show waypoint position
+    - Reflect user orientation
+- Minimap
+    - Show position
+    - Toggle on/off
+- Waypoints
+    - Customize name
+    - Customize shape
+    - Customize color
+- Menu
+    - Set location
+    - Choose waypoint
+    - Toggle on/off
+- Pathfinding
