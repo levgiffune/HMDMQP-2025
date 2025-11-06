@@ -10,6 +10,8 @@ public class VRMenu : MonoBehaviour
     private Canvas canvas;
     private CanvasGroup canvasGroup;
 
+    public bool IsOpen => canvas != null && canvas.enabled;
+    
     void Start()
     {
         canvas = GetComponent<Canvas>();
@@ -30,7 +32,7 @@ public class VRMenu : MonoBehaviour
         }
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (followCamera && canvas.enabled)
         {
