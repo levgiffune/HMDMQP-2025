@@ -7,6 +7,8 @@ public class WaypointManager : MonoBehaviour
     public GameObject waypointPrefab;
     public Transform playerCamera;
 
+    [Header("Compass")]
+    public CompassManager compass;
     // ensure single instance of waypoint manager
     public static WaypointManager Instance {get; private set;}
 
@@ -37,7 +39,6 @@ public class WaypointManager : MonoBehaviour
         waypoints.Add(newWaypoint);
         CreateVisual(newWaypoint);
 
-        Debug.LogError("Waypoint Created");
 
 
         return newWaypoint;
@@ -48,6 +49,7 @@ public class WaypointManager : MonoBehaviour
         if (waypointPrefab == null) return;
 
         GameObject visualObj = Instantiate(waypointPrefab);
+        compass.Waypoint = visualObj;
         WaypointVisual visual = visualObj.GetComponent<WaypointVisual>();
         visual.Initialize(waypoint, playerCamera);
         activeVisuals.Add(visual);

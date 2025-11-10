@@ -14,7 +14,6 @@ public class WaypointMenuController : MonoBehaviour
         // Check if A button pressed on right controller
         if (OVRInput.GetDown(OVRInput.Button.Two)) 
         {
-            Debug.LogError("B Button Pressed");
             CreateWaypoint();
         }
     }
