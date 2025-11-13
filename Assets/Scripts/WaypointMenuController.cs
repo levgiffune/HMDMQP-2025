@@ -10,8 +10,9 @@ public class WaypointMenuController : MonoBehaviour
     public Transform waypointListContainer;
     public GameObject waypointListItemPrefab;
     public Button createWaypointButton;
+    public Button deleteWaypointButton;
 
-    private int selectedIndex = -1;
+    private int selectedIndex = -1; // -1 = create, -2 = delete, 0+ waypoints
     private float thumbstickCooldown = 0f;
     private const float COOLDOWN_TIME = 0.3f;
 
@@ -48,6 +49,26 @@ public class WaypointMenuController : MonoBehaviour
             thumbstickCooldown = COOLDOWN_TIME;
             UpdateSelection();
         }
+
+        // Horizontal nav only works on create/delete buttons
+        if (selectedIndex == -1)
+        {
+            if (thumbstick.x > 0.5f) // Right to delete
+            {
+                selectedIndex = -2;
+                thumbstickCooldown = COOLDOWN_TIME;
+                UpdateSelection();
+            }
+        }
+        else if (selectedIndex == -2)
+        {
+            if (thumbstick.x < -0.5f) // Left to create
+            {
+                selectedIndex = -1;
+                thumbstickCooldown = COOLDOWN_TIME;
+                UpdateSelection();
+            }
+        }
     }
 
     void HandleTriggerConfirm()
@@ -63,7 +84,7 @@ public class WaypointMenuController : MonoBehaviour
         int itemCount = waypointListContainer.childCount;
         int totalOptions = itemCount + 1;
 
-        if (selectedIndex < -1) selectedIndex = itemCount - 1;
+        if (selectedIndex < -2) selectedIndex = itemCount - 1;
         if (selectedIndex >= itemCount) selectedIndex = -1;
         
         UpdateSelectionVisuals();
@@ -71,6 +92,7 @@ public class WaypointMenuController : MonoBehaviour
     
     void UpdateSelectionVisuals()
     {
+        // Create
         if (createWaypointButton != null)
         {
             ColorBlock colors = createWaypointButton.colors;
@@ -78,6 +100,15 @@ public class WaypointMenuController : MonoBehaviour
             createWaypointButton.colors = colors;
         }
 
+        // Delete
+        if (deleteWaypointButton != null)
+        {
+            ColorBlock colors = deleteWaypointButton.colors;
+            colors.normalColor = (selectedIndex == -2) ? Color.yellow : Color.white;
+            deleteWaypointButton.colors = colors;
+        }
+
+        // List Items
         for (int i = 0; i < waypointListContainer.childCount; i++)
         {
             WaypointListItem item = waypointListContainer.GetChild(i).GetComponent<WaypointListItem>();
@@ -93,6 +124,10 @@ public class WaypointMenuController : MonoBehaviour
         if (selectedIndex == -1)
         {
             CreateWaypoint();
+        }
+        else if (selectedIndex == -2)
+        {
+            DeleteSelectedWaypoint();
         }
         else if (selectedIndex >= 0 && selectedIndex < waypointListContainer.childCount)
         {
@@ -140,5 +175,25 @@ public class WaypointMenuController : MonoBehaviour
         GameObject itemObj = Instantiate(waypointListItemPrefab, waypointListContainer);
         WaypointListItem item = itemObj.GetComponent<WaypointListItem>();
         item.Setup(waypoint);
+    }
+
+    void DeleteSelectedWaypoint()
+    {
+        if (waypointListContainer.childCount == 0)
+        {
+            Debug.Log("No waypoints to delete");
+            return;
+        }
+        
+        WaypointListItem firstItem = waypointListContainer.GetChild(0).GetComponent<WaypointListItem>();
+        if (firstItem != null)
+        {
+            string wpId = firstItem.GetWaypointId();
+            WaypointManager.Instance.DeleteWaypoint(wpId);
+            Destroy(firstItem.gameObject);
+
+            GameObject firstVisual = WaypointManager.Instance.GetWaypointVisual(wpId);
+            Destroy(firstVisual);
+        }
     }
 }

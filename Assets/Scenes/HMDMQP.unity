@@ -6087,6 +6087,7 @@ MonoBehaviour:
   waypointListContainer: {fileID: 919612219}
   waypointListItemPrefab: {fileID: 8858053122015786359, guid: 8b9ee54f635e6584a9d3e26d92e207a8, type: 3}
   createWaypointButton: {fileID: 1522243110}
+  deleteWaypointButton: {fileID: 2006101540}
 --- !u!1 &1179347950
 GameObject:
   m_ObjectHideFlags: 0
