@@ -4,8 +4,9 @@ using TMPro;
 public class WaypointVisual : MonoBehaviour
 {
     [Header("References")]
-    public MeshRenderer iconRenderer; 
-    public TextMeshPro labelText;
+    public MeshRenderer iconRenderer;
+    public TMP_Text labelText; 
+
 
     [Header("Settings")]
     public bool billboardToCamera = true; 
