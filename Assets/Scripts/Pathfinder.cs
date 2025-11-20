@@ -3,23 +3,52 @@ using UnityEngine.AI;
 
 public class Pathfinder : MonoBehaviour{
     public GameObject Waypoint;
-    public NavMeshPath Path;
-    private float time = 0.0f;
+    public float WaypointHeight = 50f;
+    public bool EnableDebug;
+    private NavMeshPath path;
+    private LineRenderer line;
 
-    void Start(){
-        Path = new NavMeshPath();
-        time = 0.0f;
+    private void Start(){
+        path = new NavMeshPath();
+        line = GetComponent<LineRenderer>();
     }
 
-    void Update(){
-        time += Time.deltaTime;
-        if(time > 1.0f){
-            time -= 1.0f;
-            NavMesh.CalculatePath(transform.position, Waypoint.transform.position, NavMesh.AllAreas, Path);
+    private void Update(){
+        if(Waypoint == null) return;
+        NavMeshHit hit;
+        Vector3 snap = transform.position;
+        Vector3 target = Waypoint.transform.position;
+
+        if (NavMesh.SamplePosition(snap, out hit, 5f, NavMesh.AllAreas)) {
+            snap = hit.position;
+        }else{
+            Debug.Log("Can't snap user");
+            return;
         }
 
-        for(int i = 0; i < Path.corners.Length-1; i++){
-            Debug.DrawLine(Path.corners[i], Path.corners[i+1], Color.red, 3.0f, false);
+        if (NavMesh.SamplePosition(target, out hit, WaypointHeight, NavMesh.AllAreas)) {
+            target = hit.position;
+        }else{
+            Debug.Log("Can't snap target");
+            return;
+        }
+
+        if (NavMesh.CalculatePath(snap, target, NavMesh.AllAreas, path)){
+            if(EnableDebug){
+                for(int i = 0; i < path.corners.Length-1; i++){
+                    // Debug.Log($"Path: {path.corners[i]} to {path.corners[i+1]}");
+                    Debug.DrawLine(path.corners[i], path.corners[i+1], Color.red, 1.0f, false);
+                }
+            }
+
+            if(line != null){
+                line.positionCount = path.corners.Length;
+                line.SetPositions(path.corners);
+            }
+        }
+        else
+        {
+            Debug.Log(path.status);
         }
     }
 }
