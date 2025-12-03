@@ -57,8 +57,6 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,7 +78,6 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -241,8 +238,6 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -264,7 +259,6 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -339,3 +333,8 @@ MonoBehaviour:
   iconRenderer: {fileID: 8963091707263236915}
   labelText: {fileID: 8459761605856888102}
   billboardToCamera: 1
+  highlightScale: 1.5
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  cubePrefab: {fileID: 20877854855979557, guid: 3fdc2b08cb682f34d93052fe9e3266dd, type: 3}
+  spherePrefab: {fileID: 6465431977423018386, guid: 31e2f35ff039430418b4f5d84e56e56e, type: 3}
+  capsulePrefab: {fileID: 4860598524121750176, guid: 0635d8796b5282f4ca942b6a24bffa1d, type: 3}

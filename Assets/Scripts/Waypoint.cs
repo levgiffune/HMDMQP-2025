@@ -13,6 +13,7 @@ public class Waypoint
     public Quaternion rotation;
 
     public Color color;
+    public WaypointShape shape;
     public WaypointIconType iconType;
 
     public bool isActive;
@@ -25,6 +26,7 @@ public class Waypoint
         desc = "";
         color = Color.cyan;
         iconType = WaypointIconType.Standard;
+        shape = WaypointShape.Cube;
         isActive = true;
     }
 
@@ -47,3 +49,10 @@ public enum WaypointIconType
     Warning
 }
 
+[System.Serializable]
+public enum WaypointShape
+{
+    Cube,
+    Sphere,
+    Capsule
+}

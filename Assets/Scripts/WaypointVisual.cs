@@ -21,6 +21,13 @@ public class WaypointVisual : MonoBehaviour
     private Color originalColor;
     private bool isHighlighted = false;
 
+    [Header("Shape Prefabs")]
+    public GameObject cubePrefab;
+    public GameObject spherePrefab;
+    public GameObject capsulePrefab;
+
+    private GameObject currentShapeObject;
+
     void Start()
     {
         originalScale = transform.localScale;
@@ -82,6 +89,46 @@ public class WaypointVisual : MonoBehaviour
             if (iconRenderer != null)
             {
                 iconRenderer.material.color = waypointData != null ? waypointData.color : originalColor;
+            }
+        }
+    }
+
+    public void UpdateAppearance(Waypoint waypoint)
+    {
+        // Update color
+        if (iconRenderer != null)
+        {
+            iconRenderer.material.color = waypoint.color;
+        }
+        
+        // Update shape
+        if (currentShapeObject != null)
+        {
+            Destroy(currentShapeObject);
+        }
+        
+        GameObject prefabToUse = null;
+        switch (waypoint.shape)
+        {
+            case WaypointShape.Cube:
+                prefabToUse = cubePrefab;
+                break;
+            case WaypointShape.Sphere:
+                prefabToUse = spherePrefab;
+                break;
+            case WaypointShape.Capsule:
+                prefabToUse = capsulePrefab;
+                break;
+        }
+        
+        if (prefabToUse != null)
+        {
+            currentShapeObject = Instantiate(prefabToUse, transform);
+            currentShapeObject.transform.localPosition = Vector3.zero;
+            iconRenderer = currentShapeObject.GetComponent<MeshRenderer>();
+            if (iconRenderer != null)
+            {
+                iconRenderer.material.color = waypoint.color;
             }
         }
     }
