@@ -4,6 +4,8 @@ using OVR;
 
 public class WaypointMenuController : MonoBehaviour
 {
+    public static WaypointMenuController Instance { get; private set; }
+
     public Transform playerTransform;
 
     [Header("UI References")]
@@ -16,6 +18,19 @@ public class WaypointMenuController : MonoBehaviour
     private float thumbstickCooldown = 0f;
     private const float COOLDOWN_TIME = 0.3f;
 
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("Multiple WaypointMenuController instances detected. Destroying duplicate.");
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         selectedIndex = -1; // -1 = create button
@@ -24,9 +39,12 @@ public class WaypointMenuController : MonoBehaviour
     
     void Update()
     {
+        // Only process input when this menu is active
+        if (!gameObject.activeInHierarchy) return;
+
         HandleThumbstickNav();
         HandleTriggerConfirm();
-        
+
         if (thumbstickCooldown > 0)
             thumbstickCooldown -= Time.deltaTime;
     }
@@ -184,7 +202,7 @@ public class WaypointMenuController : MonoBehaviour
             Debug.Log("No waypoints to delete");
             return;
         }
-        
+
         WaypointListItem firstItem = waypointListContainer.GetChild(0).GetComponent<WaypointListItem>();
         if (firstItem != null)
         {
@@ -194,6 +212,34 @@ public class WaypointMenuController : MonoBehaviour
 
             GameObject firstVisual = WaypointManager.Instance.GetWaypointVisual(wpId);
             Destroy(firstVisual);
+        }
+    }
+
+    public void ShowMainMenu()
+    {
+        gameObject.SetActive(true);
+        selectedIndex = -1;
+        UpdateSelection();
+    }
+
+    public void OpenCustomizationMenu(string waypointId)
+    {
+        Waypoint waypoint = WaypointManager.Instance.GetWaypoint(waypointId);
+        if (waypoint == null)
+        {
+            Debug.LogError($"Waypoint with ID {waypointId} not found");
+            return;
+        }
+
+        CustomizationMenuController customizationMenu = FindObjectOfType<CustomizationMenuController>();
+        if (customizationMenu != null)
+        {
+            gameObject.SetActive(false); // Hide waypoint menu
+            customizationMenu.DisplayWaypointEditor(waypoint);
+        }
+        else
+        {
+            Debug.LogError("CustomizationMenuController not found in scene");
         }
     }
 }

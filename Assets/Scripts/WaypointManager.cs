@@ -94,12 +94,32 @@ public class WaypointManager : MonoBehaviour
                 prevVisual.SetHighlighted(false);
             }
         }
-        
+
         WaypointVisual visual = activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
         if (visual != null)
         {
             visual.SetHighlighted(true);
             highlightedWaypointId = waypointId;
+        }
+    }
+
+    public void UpdateWaypointVisual(string waypointId)
+    {
+        Waypoint waypoint = GetWaypoint(waypointId);
+        if (waypoint == null) return;
+
+        WaypointVisual visual = activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
+        if (visual != null)
+        {
+            // Update the visual to reflect waypoint data changes
+            if (visual.iconRenderer != null)
+            {
+                visual.iconRenderer.material.color = waypoint.color;
+            }
+            if (visual.labelText != null)
+            {
+                visual.labelText.text = waypoint.name;
+            }
         }
     }
 }
