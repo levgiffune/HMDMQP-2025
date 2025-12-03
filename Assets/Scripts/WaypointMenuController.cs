@@ -1,28 +1,45 @@
 using UnityEngine;
 using UnityEngine.UI;
-using OVR;
 
 public class WaypointMenuController : MonoBehaviour
 {
     public static WaypointMenuController Instance { get; private set; }
 
     public Transform playerTransform;
-    public static WaypointMenuController Instance { get; private set; }
-
-    [Header("Menu Panels")]
-    public GameObject mainMenuPanel;
-    public GameObject customizationMenuPanel;
 
     [Header("UI References")]
     public Transform waypointListContainer;
     public GameObject waypointListItemPrefab;
     public Button createWaypointButton;
     public Button deleteWaypointButton;
+    public Button editWaypointButton;
 
-    // Thumbstick navigation 
-    private int selectedIndex = -1; // -1 = create, -2 = delete, 0+ waypoints
+    [Header("Customization Options")]
+    public Color[] availableColors = { Color.red, Color.blue, Color.green, Color.magenta, Color.cyan };
+
+    // -1 = create, -2 = delete, -3 = edit, 0+ = waypoints
+    private int selectedIndex = -1;
     private float thumbstickCooldown = 0f;
     private const float COOLDOWN_TIME = 0.3f;
+
+    // Currently selected waypoint (for compass and editing)
+    private string selectedWaypointId = null;
+    private WaypointVisual currentlySelectedVisual = null;
+    private WaypointListItem currentlySelectedListItem = null;
+
+    // Editing state
+    private bool isEditing = false;
+    private Waypoint editingWaypoint = null;
+    private WaypointVisual editingVisual = null;
+    private WaypointListItem editingListItem = null;
+
+    // Preview values
+    private int previewColorIndex = 0;
+    private int previewShapeIndex = 0;
+
+    // Original values for reverting
+    private Color originalColor;
+    private WaypointIconType originalIconType;
 
     void Awake()
     {
@@ -39,17 +56,23 @@ public class WaypointMenuController : MonoBehaviour
 
     void Start()
     {
-        selectedIndex = -1; // -1 = create button
+        selectedIndex = -1;
         UpdateSelection();
     }
-    
+
     void Update()
     {
-        // Only process input when this menu is active
         if (!gameObject.activeInHierarchy) return;
 
-        HandleThumbstickNav();
-        HandleTriggerConfirm();
+        if (isEditing)
+        {
+            HandleEditingInput();
+        }
+        else
+        {
+            HandleThumbstickNav();
+            HandleTriggerConfirm();
+        }
 
         if (thumbstickCooldown > 0)
             thumbstickCooldown -= Time.deltaTime;
@@ -61,12 +84,13 @@ public class WaypointMenuController : MonoBehaviour
 
         Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
 
+        // Vertical navigation
         if (thumbstick.y > 0.5f)
         {
             selectedIndex--;
             thumbstickCooldown = COOLDOWN_TIME;
             UpdateSelection();
-        } 
+        }
         else if (thumbstick.y < -0.5f)
         {
             selectedIndex++;
@@ -74,21 +98,36 @@ public class WaypointMenuController : MonoBehaviour
             UpdateSelection();
         }
 
-        // Horizontal nav only works on create/delete buttons
-        if (selectedIndex == -1)
+        // Horizontal navigation between buttons
+        if (selectedIndex == -1) // Create
         {
-            if (thumbstick.x > 0.5f) // Right to delete
+            if (thumbstick.x > 0.5f)
             {
-                selectedIndex = -2;
+                selectedIndex = -2; // Move to delete
                 thumbstickCooldown = COOLDOWN_TIME;
                 UpdateSelection();
             }
         }
-        else if (selectedIndex == -2)
+        else if (selectedIndex == -2) // Delete
         {
-            if (thumbstick.x < -0.5f) // Left to create
+            if (thumbstick.x < -0.5f)
             {
-                selectedIndex = -1;
+                selectedIndex = -1; // Move to create
+                thumbstickCooldown = COOLDOWN_TIME;
+                UpdateSelection();
+            }
+            else if (thumbstick.x > 0.5f)
+            {
+                selectedIndex = -3; // Move to edit
+                thumbstickCooldown = COOLDOWN_TIME;
+                UpdateSelection();
+            }
+        }
+        else if (selectedIndex == -3) // Edit
+        {
+            if (thumbstick.x < -0.5f)
+            {
+                selectedIndex = -2; // Move to delete
                 thumbstickCooldown = COOLDOWN_TIME;
                 UpdateSelection();
             }
@@ -103,20 +142,174 @@ public class WaypointMenuController : MonoBehaviour
         }
     }
 
+    void HandleEditingInput()
+    {
+        if (thumbstickCooldown > 0) return;
+
+        Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+
+        // Left/right cycles color
+        if (thumbstick.x > 0.5f)
+        {
+            previewColorIndex = (previewColorIndex + 1) % availableColors.Length;
+            thumbstickCooldown = COOLDOWN_TIME;
+            UpdatePreview();
+        }
+        else if (thumbstick.x < -0.5f)
+        {
+            previewColorIndex = (previewColorIndex - 1 + availableColors.Length) % availableColors.Length;
+            thumbstickCooldown = COOLDOWN_TIME;
+            UpdatePreview();
+        }
+
+        // Up/down cycles shape
+        if (thumbstick.y > 0.5f)
+        {
+            int shapeCount = System.Enum.GetValues(typeof(WaypointIconType)).Length;
+            previewShapeIndex = (previewShapeIndex - 1 + shapeCount) % shapeCount;
+            thumbstickCooldown = COOLDOWN_TIME;
+            UpdatePreview();
+        }
+        else if (thumbstick.y < -0.5f)
+        {
+            int shapeCount = System.Enum.GetValues(typeof(WaypointIconType)).Length;
+            previewShapeIndex = (previewShapeIndex + 1) % shapeCount;
+            thumbstickCooldown = COOLDOWN_TIME;
+            UpdatePreview();
+        }
+
+        // Trigger confirms
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        {
+            ConfirmEdit();
+        }
+
+        // B button cancels
+        if (OVRInput.GetDown(OVRInput.Button.Two))
+        {
+            CancelEdit();
+        }
+    }
+
+    void UpdatePreview()
+    {
+        Color previewColor = availableColors[previewColorIndex];
+        WaypointIconType previewIconType = (WaypointIconType)previewShapeIndex;
+
+        if (editingVisual != null)
+        {
+            editingVisual.PreviewAppearance(previewColor, previewIconType);
+        }
+
+        if (editingListItem != null)
+        {
+            editingListItem.UpdateEditDisplay(previewColor, previewIconType);
+        }
+    }
+
+    void EnterEditMode()
+    {
+        if (string.IsNullOrEmpty(selectedWaypointId))
+        {
+            Debug.Log("No waypoint selected to edit");
+            return;
+        }
+
+        editingWaypoint = WaypointManager.Instance.GetWaypoint(selectedWaypointId);
+        if (editingWaypoint == null) return;
+
+        GameObject visualObj = WaypointManager.Instance.GetWaypointVisual(selectedWaypointId);
+        if (visualObj == null) return;
+
+        editingVisual = visualObj.GetComponent<WaypointVisual>();
+
+        // Find the list item for this waypoint
+        editingListItem = FindListItemById(selectedWaypointId);
+
+        // Cache original values
+        originalColor = editingWaypoint.color;
+        originalIconType = editingWaypoint.iconType;
+
+        // Set preview indices to match current values
+        previewColorIndex = System.Array.IndexOf(availableColors, originalColor);
+        if (previewColorIndex < 0) previewColorIndex = 0;
+        previewShapeIndex = (int)originalIconType;
+
+        // Expand the list item
+        if (editingListItem != null)
+        {
+            editingListItem.SetExpanded(true);
+            editingListItem.UpdateEditDisplay(originalColor, originalIconType);
+        }
+
+        isEditing = true;
+    }
+
+    WaypointListItem FindListItemById(string waypointId)
+    {
+        for (int i = 0; i < waypointListContainer.childCount; i++)
+        {
+            WaypointListItem item = waypointListContainer.GetChild(i).GetComponent<WaypointListItem>();
+            if (item != null && item.GetWaypointId() == waypointId)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    void ConfirmEdit()
+    {
+        if (editingWaypoint != null)
+        {
+            editingWaypoint.color = availableColors[previewColorIndex];
+            editingWaypoint.iconType = (WaypointIconType)previewShapeIndex;
+
+            if (editingVisual != null)
+            {
+                editingVisual.UpdateAppearance(editingWaypoint);
+            }
+        }
+
+        ExitEditMode();
+    }
+
+    void CancelEdit()
+    {
+        if (editingVisual != null)
+        {
+            editingVisual.PreviewAppearance(originalColor, originalIconType);
+        }
+
+        ExitEditMode();
+    }
+
+    void ExitEditMode()
+    {
+        if (editingListItem != null)
+        {
+            editingListItem.SetExpanded(false);
+        }
+
+        isEditing = false;
+        editingWaypoint = null;
+        editingVisual = null;
+        editingListItem = null;
+    }
+
     void UpdateSelection()
     {
         int itemCount = waypointListContainer.childCount;
-        int totalOptions = itemCount + 1;
 
-        if (selectedIndex < -2) selectedIndex = itemCount - 1;
+        if (selectedIndex < -3) selectedIndex = itemCount - 1;
         if (selectedIndex >= itemCount) selectedIndex = -1;
-        
+
         UpdateSelectionVisuals();
     }
-    
+
     void UpdateSelectionVisuals()
     {
-        // Create
+        // Create button
         if (createWaypointButton != null)
         {
             ColorBlock colors = createWaypointButton.colors;
@@ -124,7 +317,7 @@ public class WaypointMenuController : MonoBehaviour
             createWaypointButton.colors = colors;
         }
 
-        // Delete
+        // Delete button
         if (deleteWaypointButton != null)
         {
             ColorBlock colors = deleteWaypointButton.colors;
@@ -132,7 +325,15 @@ public class WaypointMenuController : MonoBehaviour
             deleteWaypointButton.colors = colors;
         }
 
-        // List Items
+        // Edit button
+        if (editWaypointButton != null)
+        {
+            ColorBlock colors = editWaypointButton.colors;
+            colors.normalColor = (selectedIndex == -3) ? Color.yellow : Color.white;
+            editWaypointButton.colors = colors;
+        }
+
+        // List items
         for (int i = 0; i < waypointListContainer.childCount; i++)
         {
             WaypointListItem item = waypointListContainer.GetChild(i).GetComponent<WaypointListItem>();
@@ -153,6 +354,10 @@ public class WaypointMenuController : MonoBehaviour
         {
             DeleteSelectedWaypoint();
         }
+        else if (selectedIndex == -3)
+        {
+            EnterEditMode();
+        }
         else if (selectedIndex >= 0 && selectedIndex < waypointListContainer.childCount)
         {
             WaypointListItem item = waypointListContainer.GetChild(selectedIndex).GetComponent<WaypointListItem>();
@@ -170,37 +375,65 @@ public class WaypointMenuController : MonoBehaviour
             Debug.LogError("Player transform not assigned!");
             return;
         }
-        
+
         Vector3 spawnPosition = playerTransform.position + playerTransform.forward * 2f;
-        Waypoint newWaypoint = WaypointManager.Instance.CreateWaypoint( 
-            spawnPosition, 
+        Waypoint newWaypoint = WaypointManager.Instance.CreateWaypoint(
+            spawnPosition,
             $"Waypoint {WaypointManager.Instance.Waypoints.Count + 1}"
         );
 
         AddWaypointToList(newWaypoint);
         selectedIndex = waypointListContainer.childCount - 1;
+        SelectWaypoint(newWaypoint.id);
         UpdateSelection();
     }
 
     void SelectWaypoint(string waypointId)
     {
+        // Deselect previous
+        if (currentlySelectedVisual != null)
+        {
+            currentlySelectedVisual.SetSelected(false);
+        }
+
+        if (currentlySelectedListItem != null)
+        {
+            currentlySelectedListItem.SetActiveSelect(false);
+        }
+
+        selectedWaypointId = waypointId;
+
         Waypoint waypoint = WaypointManager.Instance.GetWaypoint(waypointId);
+        
         if (waypoint != null)
         {
-            if (currentlySelectedWaypointId == waypointId)
+            GameObject visualObj = WaypointManager.Instance.GetWaypointVisual(waypointId);
+            WaypointListItem item = FindListItemById(waypointId);
+
+            if (visualObj != null)
             {
-                OpenCustomizationMenu(waypoint);
+                CompassManager.Instance.Waypoint = visualObj;
+
+                WaypointVisual visual = visualObj.GetComponent<WaypointVisual>();
+                if (visual != null)
+                {
+                    visual.SetSelected(true);
+                    currentlySelectedVisual = visual;
+                }
             }
-            currentlySelectedWaypointId = waypointId;
-            CompassManager.Instance.Waypoint = WaypointManager.Instance.GetWaypointVisual(waypointId);
-            WaypointManager.Instance.HighlightWaypoint(waypointId);
+
+            if (item != null)
+            {
+                item.SetActiveSelect(true);
+                currentlySelectedListItem = item;
+            }
         }
     }
 
     void AddWaypointToList(Waypoint waypoint)
     {
         if (waypointListItemPrefab == null || waypointListContainer == null) return;
-        
+
         GameObject itemObj = Instantiate(waypointListItemPrefab, waypointListContainer);
         WaypointListItem item = itemObj.GetComponent<WaypointListItem>();
         item.Setup(waypoint);
@@ -218,6 +451,14 @@ public class WaypointMenuController : MonoBehaviour
         if (firstItem != null)
         {
             string wpId = firstItem.GetWaypointId();
+
+            // Clear selection if deleting the selected waypoint
+            if (wpId == selectedWaypointId)
+            {
+                selectedWaypointId = null;
+                currentlySelectedVisual = null;
+            }
+
             WaypointManager.Instance.DeleteWaypoint(wpId);
             Destroy(firstItem.gameObject);
 
@@ -231,26 +472,5 @@ public class WaypointMenuController : MonoBehaviour
         gameObject.SetActive(true);
         selectedIndex = -1;
         UpdateSelection();
-    }
-
-    public void OpenCustomizationMenu(string waypointId)
-    {
-        Waypoint waypoint = WaypointManager.Instance.GetWaypoint(waypointId);
-        if (waypoint == null)
-        {
-            Debug.LogError($"Waypoint with ID {waypointId} not found");
-            return;
-        }
-
-        CustomizationMenuController customizationMenu = FindObjectOfType<CustomizationMenuController>();
-        if (customizationMenu != null)
-        {
-            gameObject.SetActive(false); // Hide waypoint menu
-            customizationMenu.DisplayWaypointEditor(waypoint);
-        }
-        else
-        {
-            Debug.LogError("CustomizationMenuController not found in scene");
-        }
     }
 }
