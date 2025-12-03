@@ -5,6 +5,11 @@ using OVR;
 public class WaypointMenuController : MonoBehaviour
 {
     public Transform playerTransform;
+    public static WaypointMenuController Instance { get; private set; }
+
+    [Header("Menu Panels")]
+    public GameObject mainMenuPanel;
+    public GameObject customizationMenuPanel;
 
     [Header("UI References")]
     public Transform waypointListContainer;
@@ -12,10 +17,26 @@ public class WaypointMenuController : MonoBehaviour
     public Button createWaypointButton;
     public Button deleteWaypointButton;
 
+    // Thumbstick navigation 
     private int selectedIndex = -1; // -1 = create, -2 = delete, 0+ waypoints
     private float thumbstickCooldown = 0f;
     private const float COOLDOWN_TIME = 0.3f;
 
+    // Handle multiple menus
+    private CustomizationMenuController customizationController;
+    private string currentlySelectedWaypointId = null;
+
+    void Awake()
+    {
+        Instance = this;
+        
+        if (customizationMenuPanel != null)
+        {
+            customizationController = customizationMenuPanel.GetComponent<CustomizationMenuController>();
+            customizationMenuPanel.SetActive(false);
+        }
+    }
+    
     void Start()
     {
         selectedIndex = -1; // -1 = create button
@@ -163,6 +184,11 @@ public class WaypointMenuController : MonoBehaviour
         Waypoint waypoint = WaypointManager.Instance.GetWaypoint(waypointId);
         if (waypoint != null)
         {
+            if (currentlySelectedWaypointId == waypointId)
+            {
+                OpenCustomizationMenu(waypoint);
+            }
+            currentlySelectedWaypointId = waypointId;
             CompassManager.Instance.Waypoint = WaypointManager.Instance.GetWaypointVisual(waypointId);
             WaypointManager.Instance.HighlightWaypoint(waypointId);
         }
@@ -194,6 +220,23 @@ public class WaypointMenuController : MonoBehaviour
 
             GameObject firstVisual = WaypointManager.Instance.GetWaypointVisual(wpId);
             Destroy(firstVisual);
+        }
+    }
+
+    void OpenCustomizationMenu(Waypoint waypoint)
+    {
+        if (customizationController != null)
+        {
+            mainMenuPanel.SetActive(false);
+            customizationController.DisplayWaypointEditor(waypoint);
+        }
+    }
+
+    public void ShowMainMenu()
+    {
+        if (mainMenuPanel != null)
+        {
+            mainMenuPanel.SetActive(true);
         }
     }
 }

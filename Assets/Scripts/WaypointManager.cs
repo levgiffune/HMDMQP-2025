@@ -102,4 +102,13 @@ public class WaypointManager : MonoBehaviour
             highlightedWaypointId = waypointId;
         }
     }
+    public void UpdateWaypointVisual(string waypointId)
+    {
+        WaypointVisual visual = activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
+        if (visual != null)
+        {
+            Waypoint wp = GetWaypoint(waypointId);
+            visual.UpdateAppearance(wp);
+        }
+    }
 }
