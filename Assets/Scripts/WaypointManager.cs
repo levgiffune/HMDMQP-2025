@@ -16,7 +16,6 @@ public class WaypointManager : MonoBehaviour
     private List<Waypoint> waypoints = new List<Waypoint>(); 
     // waypoint visual representation
     private List<WaypointVisual> activeVisuals = new List<WaypointVisual>();
-    private string highlightedWaypointId = null; 
 
     // getter for waypoints list
     public List<Waypoint> Waypoints => waypoints;
@@ -84,25 +83,6 @@ public class WaypointManager : MonoBehaviour
         return visual != null ? visual.gameObject : null;
     }
 
-    public void HighlightWaypoint(string waypointId)
-    {
-        if (highlightedWaypointId != null)
-        {
-            WaypointVisual prevVisual = activeVisuals.Find(v => v.GetWaypointData().id == highlightedWaypointId);
-            if (prevVisual != null)
-            {
-                prevVisual.SetHighlighted(false);
-            }
-        }
-
-        WaypointVisual visual = activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
-        if (visual != null)
-        {
-            visual.SetHighlighted(true);
-            highlightedWaypointId = waypointId;
-        }
-    }
-
     public void UpdateWaypointVisual(string waypointId)
     {
         Waypoint waypoint = GetWaypoint(waypointId);
@@ -111,15 +91,7 @@ public class WaypointManager : MonoBehaviour
         WaypointVisual visual = activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
         if (visual != null)
         {
-            // Update the visual to reflect waypoint data changes
-            if (visual.iconRenderer != null)
-            {
-                visual.iconRenderer.material.color = waypoint.color;
-            }
-            if (visual.labelText != null)
-            {
-                visual.labelText.text = waypoint.name;
-            }
+            visual.UpdateAppearance(waypoint);
         }
     }
 }
