@@ -19,11 +19,22 @@ public class CustomizationMenuController : MonoBehaviour
     private float thumbstickCooldown = 0f;
     private const float COOLDOWN_TIME = 0.3f;
 
+    void Start()
+    {
+        // Start hidden
+        gameObject.SetActive(false);
+        selectedIndex = 0;
+        UpdateSelection();
+    }
+
     void Update()
     {
+        // Only process input when this menu is active
+        if (!gameObject.activeInHierarchy) return;
+
         HandleThumbstickNav();
         HandleTriggerConfirm();
-        
+
         if (thumbstickCooldown > 0)
             thumbstickCooldown -= Time.deltaTime;
     }
@@ -31,9 +42,9 @@ public class CustomizationMenuController : MonoBehaviour
     void HandleThumbstickNav()
     {
         if (thumbstickCooldown > 0) return;
-        
+
         Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
-        
+
         if (thumbstick.y > 0.5f)
         {
             selectedIndex--;
@@ -61,7 +72,7 @@ public class CustomizationMenuController : MonoBehaviour
         // Wrap around
         if (selectedIndex < 0) selectedIndex = 2;
         if (selectedIndex > 2) selectedIndex = 0;
-        
+
         // Update visuals
         UpdateButtonVisuals(backButton, selectedIndex == 0);
         UpdateButtonVisuals(colorButton, selectedIndex == 1);
@@ -96,40 +107,68 @@ public class CustomizationMenuController : MonoBehaviour
 
     void CycleColor()
     {
-        if (currentWaypoint == null) return;
-        
+        if (currentWaypoint == null)
+        {
+            Debug.LogWarning("No waypoint selected for customization");
+            return;
+        }
+
         currentColorIndex = (currentColorIndex + 1) % colors.Length;
         currentWaypoint.color = colors[currentColorIndex];
-        
-        // Update visual in real-time
-        WaypointManager.Instance.UpdateWaypointVisual(currentWaypoint.id);
+
+        // Update visual in real-time with null check
+        if (WaypointManager.Instance != null)
+        {
+            WaypointManager.Instance.UpdateWaypointVisual(currentWaypoint.id);
+        }
+        else
+        {
+            Debug.LogError("WaypointManager.Instance is null");
+        }
     }
 
     void CycleShape()
     {
-        if (currentWaypoint == null) return;
-        
-        currentShapeIndex = (currentShapeIndex + 1) % 3;
-        currentWaypoint.shape = (WaypointShape)currentShapeIndex;
-        
-        // Update visual in real-time
-        WaypointManager.Instance.UpdateWaypointVisual(currentWaypoint.id);
-    }
+        if (currentWaypoint == null)
+        {
+            Debug.LogWarning("No waypoint selected for customization");
+            return;
+        }
 
+        // Use WaypointIconType instead of WaypointShape
+        currentShapeIndex = (currentShapeIndex + 1) % 3;
+        currentWaypoint.iconType = (WaypointIconType)currentShapeIndex;
+
+        // Update visual in real-time with null check
+        if (WaypointManager.Instance != null)
+        {
+            WaypointManager.Instance.UpdateWaypointVisual(currentWaypoint.id);
+        }
+        else
+        {
+            Debug.LogError("WaypointManager.Instance is null");
+        }
+    }
 
     public void DisplayWaypointEditor(Waypoint waypoint)
     {
+        if (waypoint == null)
+        {
+            Debug.LogError("Cannot display editor for null waypoint");
+            return;
+        }
+
         currentWaypoint = waypoint;
         gameObject.SetActive(true);
-        
+
         // Set current indices based on waypoint
         currentColorIndex = System.Array.IndexOf(colors, waypoint.color);
         if (currentColorIndex < 0) currentColorIndex = 0;
-        currentShapeIndex = (int)waypoint.shape;
-        
+        currentShapeIndex = (int)waypoint.iconType;
+
         selectedIndex = 0;
         UpdateSelection();
-        
+
         if (waypointNameDisplay != null)
         {
             waypointNameDisplay.text = $"Editing: {waypoint.name}";
@@ -139,7 +178,16 @@ public class CustomizationMenuController : MonoBehaviour
     void OnBackButton()
     {
         gameObject.SetActive(false);
-        WaypointMenuController.Instance.ShowMainMenu();
+
+        // Safely switch back to waypoint menu
+        if (WaypointMenuController.Instance != null)
+        {
+            WaypointMenuController.Instance.ShowMainMenu();
+        }
+        else
+        {
+            Debug.LogError("WaypointMenuController.Instance is null");
+        }
     }
 
     public Waypoint GetCurrentWaypoint()
