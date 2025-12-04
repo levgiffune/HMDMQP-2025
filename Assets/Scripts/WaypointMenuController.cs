@@ -8,6 +8,7 @@ public class WaypointMenuController : MonoBehaviour
     public Transform playerTransform;
 
     [Header("UI References")]
+    public VRMenu vrMenu;
     public Transform waypointListContainer;
     public GameObject waypointListItemPrefab;
     public Button createWaypointButton;
@@ -66,7 +67,7 @@ public class WaypointMenuController : MonoBehaviour
 
     void Update()
     {
-        if (!gameObject.activeInHierarchy) return;
+        if (vrMenu != null && !vrMenu.IsOpen) return;
 
         if (isEditing)
         {
@@ -478,15 +479,15 @@ public class WaypointMenuController : MonoBehaviour
     }
 
     public void AddWaypointToListPublic(Waypoint waypoint)
-    {
-        if (waypointListItemPrefab == null || waypointListContainer == null) return;
+        {
+            if (waypointListItemPrefab == null || waypointListContainer == null) return;
 
-        GameObject itemObj = Instantiate(waypointListItemPrefab, waypointListContainer);
-        WaypointListItem item = itemObj.GetComponent<WaypointListItem>();
-        item.Setup(waypoint);
+            GameObject itemObj = Instantiate(waypointListItemPrefab, waypointListContainer);
+            WaypointListItem item = itemObj.GetComponent<WaypointListItem>();
+            item.Setup(waypoint);
 
-        UpdatePageDisplay();
-    }
+            UpdatePageDisplay();
+        }
 
     void DeleteSelectedWaypoint()
     {
