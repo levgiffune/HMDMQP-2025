@@ -164,6 +164,7 @@ public class WaypointMenuController : MonoBehaviour
         if (waypoint != null)
         {
             CompassManager.Instance.Waypoint = WaypointManager.Instance.GetWaypointVisual(waypointId);
+            Pathfinder.Instance.Waypoint = WaypointManager.Instance.GetWaypointVisual(waypointId);
             WaypointManager.Instance.HighlightWaypoint(waypointId);
         }
     }
