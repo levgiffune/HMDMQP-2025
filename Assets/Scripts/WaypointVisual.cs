@@ -15,11 +15,17 @@ public class WaypointVisual : MonoBehaviour
     [Tooltip("Order must match WaypointIconType enum: Standard, POI, Warning")]
     public GameObject[] shapePrefabs;
 
+    [Header("Description Panel")]
+    public GameObject descriptionPanel;
+    public TextMeshProUGUI waypointNameText;
+    public TextMeshProUGUI descriptionText;
+
     private GameObject currentShapeObject;
     private MeshRenderer currentRenderer;
     private Waypoint waypointData;
     private Transform cameraTransform;
     private bool isSelected = false;
+    private bool hasDesc = false;
 
     public void Initialize(Waypoint waypoint, Transform playerCamera)
     {
@@ -35,6 +41,7 @@ public class WaypointVisual : MonoBehaviour
         }
 
         UpdateAppearance(waypoint);
+        GenerateDescriptionPanel(waypoint);
     }
 
     private void Update()
@@ -45,6 +52,7 @@ public class WaypointVisual : MonoBehaviour
             transform.Rotate(0, 180, 0);
         }
     }
+
 
     public Waypoint GetWaypointData()
     {
@@ -58,6 +66,11 @@ public class WaypointVisual : MonoBehaviour
         if (selectionIndicator != null)
         {
             selectionIndicator.SetActive(selected);
+        }
+
+        if (hasDesc && descriptionPanel != null)
+        {
+            descriptionPanel.SetActive(selected);
         }
     }
 
@@ -117,6 +130,16 @@ public class WaypointVisual : MonoBehaviour
         if (waypointData != null)
         {
             UpdateAppearance(waypointData);
+        }
+    }
+
+    public void GenerateDescriptionPanel(Waypoint waypoint)
+    {
+        if (waypoint.desc != null && descriptionPanel != null)
+        {
+            waypointNameText.text = waypointData.name;
+            descriptionText.text = waypointData.desc;
+            hasDesc = true;
         }
     }
 }
