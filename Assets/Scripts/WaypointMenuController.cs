@@ -17,6 +17,10 @@ public class WaypointMenuController : MonoBehaviour
     [Header("Customization Options")]
     public Color[] availableColors = { Color.red, Color.blue, Color.green, Color.magenta, Color.cyan };
 
+    [Header("Pagination")]
+    public int itemsPerPage = 4;
+    private int currentPage = 0;
+
     // -1 = create, -2 = delete, -3 = edit, 0+ = waypoints
     private int selectedIndex = -1;
     private float thumbstickCooldown = 0f;
@@ -82,52 +86,83 @@ public class WaypointMenuController : MonoBehaviour
     {
         if (thumbstickCooldown > 0) return;
 
-        Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+        Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
 
         // Vertical navigation
         if (thumbstick.y > 0.5f)
         {
             selectedIndex--;
             thumbstickCooldown = COOLDOWN_TIME;
+            
+            // Check if we need to go to previous page
+            if (selectedIndex >= 0)
+            {
+                int selectedPage = selectedIndex / itemsPerPage;
+                if (selectedPage < currentPage)
+                {
+                    currentPage = selectedPage;
+                    UpdatePageDisplay();
+                }
+            }
+            else
+            {
+                // Going back to buttons, show first page
+                currentPage = 0;
+                UpdatePageDisplay();
+            }
+            
             UpdateSelection();
         }
         else if (thumbstick.y < -0.5f)
         {
             selectedIndex++;
             thumbstickCooldown = COOLDOWN_TIME;
+            
+            // Check if we need to go to next page
+            int itemCount = waypointListContainer.childCount;
+            if (selectedIndex < itemCount)
+            {
+                int selectedPage = selectedIndex / itemsPerPage;
+                if (selectedPage > currentPage)
+                {
+                    currentPage = selectedPage;
+                    UpdatePageDisplay();
+                }
+            }
+            
             UpdateSelection();
         }
 
         // Horizontal navigation between buttons
-        if (selectedIndex == -1) // Create
+        if (selectedIndex == -1)
         {
             if (thumbstick.x > 0.5f)
             {
-                selectedIndex = -2; // Move to delete
+                selectedIndex = -2;
                 thumbstickCooldown = COOLDOWN_TIME;
                 UpdateSelection();
             }
         }
-        else if (selectedIndex == -2) // Delete
+        else if (selectedIndex == -2)
         {
             if (thumbstick.x < -0.5f)
             {
-                selectedIndex = -1; // Move to create
+                selectedIndex = -1;
                 thumbstickCooldown = COOLDOWN_TIME;
                 UpdateSelection();
             }
             else if (thumbstick.x > 0.5f)
             {
-                selectedIndex = -3; // Move to edit
+                selectedIndex = -3;
                 thumbstickCooldown = COOLDOWN_TIME;
                 UpdateSelection();
             }
         }
-        else if (selectedIndex == -3) // Edit
+        else if (selectedIndex == -3)
         {
             if (thumbstick.x < -0.5f)
             {
-                selectedIndex = -2; // Move to delete
+                selectedIndex = -2;
                 thumbstickCooldown = COOLDOWN_TIME;
                 UpdateSelection();
             }
@@ -136,7 +171,7 @@ public class WaypointMenuController : MonoBehaviour
 
     void HandleTriggerConfirm()
     {
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
             ConfirmSelection();
         }
@@ -146,7 +181,7 @@ public class WaypointMenuController : MonoBehaviour
     {
         if (thumbstickCooldown > 0) return;
 
-        Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+        Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
 
         // Left/right cycles color
         if (thumbstick.x > 0.5f)
@@ -179,7 +214,7 @@ public class WaypointMenuController : MonoBehaviour
         }
 
         // Trigger confirms
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
             ConfirmEdit();
         }
@@ -304,7 +339,8 @@ public class WaypointMenuController : MonoBehaviour
         if (selectedIndex < -3) selectedIndex = itemCount - 1;
         if (selectedIndex >= itemCount) selectedIndex = -1;
 
-        UpdateSelectionVisuals();
+        UpdateSelectionVisuals();   
+        Debug.Log("UpdateSelection called");
     }
 
     void UpdateSelectionVisuals()
@@ -437,6 +473,8 @@ public class WaypointMenuController : MonoBehaviour
         GameObject itemObj = Instantiate(waypointListItemPrefab, waypointListContainer);
         WaypointListItem item = itemObj.GetComponent<WaypointListItem>();
         item.Setup(waypoint);
+
+        UpdatePageDisplay();
     }
 
     void DeleteSelectedWaypoint()
@@ -452,7 +490,6 @@ public class WaypointMenuController : MonoBehaviour
         {
             string wpId = firstItem.GetWaypointId();
 
-            // Clear selection if deleting the selected waypoint
             if (wpId == selectedWaypointId)
             {
                 selectedWaypointId = null;
@@ -464,6 +501,52 @@ public class WaypointMenuController : MonoBehaviour
 
             GameObject firstVisual = WaypointManager.Instance.GetWaypointVisual(wpId);
             Destroy(firstVisual);
+
+            // Recalculate page if needed
+            int pageCount = GetPageCount();
+            if (currentPage >= pageCount && currentPage > 0)
+            {
+                currentPage--;
+            }
+            UpdatePageDisplay();
+        }
+    }
+
+    int GetPageCount()
+    {
+        int itemCount = waypointListContainer.childCount;
+        if (itemCount == 0) return 1;
+        return Mathf.CeilToInt((float)itemCount / itemsPerPage);
+    }
+
+    void UpdatePageDisplay()
+    {
+        int itemCount = waypointListContainer.childCount;
+        
+        for (int i = 0; i < itemCount; i++)
+        {
+            GameObject item = waypointListContainer.GetChild(i).gameObject;
+            int itemPage = i / itemsPerPage;
+            item.SetActive(itemPage == currentPage);
+        }
+    }
+
+    void NextPage()
+    {
+        int pageCount = GetPageCount();
+        if (currentPage < pageCount - 1)
+        {
+            currentPage++;
+            UpdatePageDisplay();
+        }
+    }
+
+    void PreviousPage()
+    {
+        if (currentPage > 0)
+        {
+            currentPage--;
+            UpdatePageDisplay();
         }
     }
 
