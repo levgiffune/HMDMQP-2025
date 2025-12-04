@@ -22,6 +22,7 @@ public class WaypointManager : MonoBehaviour
 
     void Start()
     {
+        // Start of default waypoint creation
         Vector3 spawnPosition = playerCamera.position + playerCamera.forward * 1.5f;
         Waypoint defaultWaypoint = new Waypoint(spawnPosition, "Home Base");
         defaultWaypoint.desc = "This is your starting location.";
@@ -30,6 +31,7 @@ public class WaypointManager : MonoBehaviour
         
         waypoints.Add(defaultWaypoint);
         CreateVisual(defaultWaypoint);
+        // End of default waypoint creation
         
         if (WaypointMenuController.Instance != null)
         {
