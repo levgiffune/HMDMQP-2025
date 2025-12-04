@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using TMPro;
 
 
 [System.Serializable]
@@ -23,7 +24,7 @@ public class Waypoint
         id = Guid.NewGuid().ToString();
         position = pos;
         name = wpname;
-        desc = "";
+        desc = null;
         color = Color.cyan;
         iconType = WaypointIconType.Standard;
         shape = WaypointShape.Cube;

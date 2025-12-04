@@ -20,6 +20,22 @@ public class WaypointManager : MonoBehaviour
     // getter for waypoints list
     public List<Waypoint> Waypoints => waypoints;
 
+    void Start()
+    {
+        Vector3 spawnPosition = playerCamera.position + playerCamera.forward * 1.5f;
+        Waypoint defaultWaypoint = new Waypoint(spawnPosition, "Home Base");
+        defaultWaypoint.desc = "This is your starting location.";
+        defaultWaypoint.color = Color.green;
+        defaultWaypoint.iconType = WaypointIconType.POI;
+        
+        waypoints.Add(defaultWaypoint);
+        CreateVisual(defaultWaypoint);
+        
+        if (WaypointMenuController.Instance != null)
+        {
+            WaypointMenuController.Instance.AddWaypointToListPublic(defaultWaypoint);
+        }
+    }
 
     void Awake()
     {

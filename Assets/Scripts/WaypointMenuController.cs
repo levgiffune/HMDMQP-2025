@@ -477,6 +477,17 @@ public class WaypointMenuController : MonoBehaviour
         UpdatePageDisplay();
     }
 
+    public void AddWaypointToListPublic(Waypoint waypoint)
+    {
+        if (waypointListItemPrefab == null || waypointListContainer == null) return;
+
+        GameObject itemObj = Instantiate(waypointListItemPrefab, waypointListContainer);
+        WaypointListItem item = itemObj.GetComponent<WaypointListItem>();
+        item.Setup(waypoint);
+
+        UpdatePageDisplay();
+    }
+
     void DeleteSelectedWaypoint()
     {
         if (waypointListContainer.childCount == 0)
