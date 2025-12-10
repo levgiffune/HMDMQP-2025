@@ -5,16 +5,17 @@ public class WaypointManager : MonoBehaviour
 {
     [Header("Prefab")]
     public GameObject waypointPrefab;
-    public Transform playerCamera;
 
     [Header("Compass")]
     public CompassManager compass;
+
     // ensure single instance of waypoint manager
     public static WaypointManager Instance {get; private set;}
 
-    // waypoint data representation
+    // reference to player camera for waypoint orientation
+    public Transform playerCamera;
+
     private List<Waypoint> waypoints = new List<Waypoint>(); 
-    // waypoint visual representation
     private List<WaypointVisual> activeVisuals = new List<WaypointVisual>();
 
     // getter for waypoints list
@@ -57,8 +58,6 @@ public class WaypointManager : MonoBehaviour
         Waypoint newWaypoint = new Waypoint(position, name);
         waypoints.Add(newWaypoint);
         CreateVisual(newWaypoint);
-
-
 
         return newWaypoint;
     }

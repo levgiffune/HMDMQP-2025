@@ -14,10 +14,8 @@ public class Waypoint
     public Quaternion rotation;
 
     public Color color;
-    public WaypointShape shape;
     public WaypointIconType iconType;
 
-    public bool isActive;
 
     public Waypoint(Vector3 pos, string wpname = "New Waypoint")
     {
@@ -27,8 +25,6 @@ public class Waypoint
         desc = null;
         color = Color.cyan;
         iconType = WaypointIconType.Standard;
-        shape = WaypointShape.Cube;
-        isActive = true;
     }
 
     public float DistanceFrom(Vector3 otherPosition)
@@ -48,12 +44,4 @@ public enum WaypointIconType
     Standard, 
     POI, 
     Warning
-}
-
-[System.Serializable]
-public enum WaypointShape
-{
-    Cube,
-    Sphere,
-    Capsule
 }
