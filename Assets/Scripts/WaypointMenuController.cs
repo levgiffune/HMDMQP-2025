@@ -87,7 +87,7 @@ public class WaypointMenuController : MonoBehaviour
     {
         if (thumbstickCooldown > 0) return;
 
-        Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
+        Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
 
         // Vertical navigation
         if (thumbstick.y > 0.5f)
@@ -172,7 +172,7 @@ public class WaypointMenuController : MonoBehaviour
 
     void HandleTriggerConfirm()
     {
-        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
             ConfirmSelection();
         }
@@ -182,7 +182,7 @@ public class WaypointMenuController : MonoBehaviour
     {
         if (thumbstickCooldown > 0) return;
 
-        Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
+        Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
 
         // Left/right cycles color
         if (thumbstick.x > 0.5f)
@@ -215,7 +215,7 @@ public class WaypointMenuController : MonoBehaviour
         }
 
         // Trigger confirms
-        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
             ConfirmEdit();
         }
