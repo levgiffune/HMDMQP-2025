@@ -70,6 +70,24 @@ public class WaypointManager : MonoBehaviour
         return w;
     }
 
+    private void GenerateDemoWaypoint(Vector3 sp, string n, string d)
+    {
+        Vector3 spawnPosition = sp;
+        Waypoint defaultWaypoint = new Waypoint(spawnPosition, n);
+        defaultWaypoint.desc = d;
+        defaultWaypoint.color = Color.green;
+        defaultWaypoint.iconType = WaypointIconType.POI;
+        
+        waypoints.Add(defaultWaypoint);
+        CreateVisual(defaultWaypoint);
+        
+        
+        if (WaypointMenuController.Instance != null)
+        {
+            WaypointMenuController.Instance.AddWaypointToListPublic(defaultWaypoint);
+        }
+    }
+
     private void CreateVisual(Waypoint waypoint)
     {
         if (waypointPrefab == null) return;
