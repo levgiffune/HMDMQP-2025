@@ -17,7 +17,6 @@ public class Waypoint
     public WaypointIconType iconType;
 
 
-<<<<<<< HEAD
     public Waypoint(
         Color c,
         Vector3 p,
@@ -43,17 +42,6 @@ public class Waypoint
         desc = d;
         color = Color.cyan;
         iconType = i;
-=======
-    public Waypoint(Vector3 pos, string wpname = "New Waypoint")
-    {
-        id = Guid.NewGuid().ToString();
-        position = pos;
-        name = wpname;
-        desc = "";
-        color = Color.cyan;
-        iconType = WaypointIconType.Standard;
-        isActive = true;
->>>>>>> parent of 038ff70 (Built waypoint list builder architecture and populated demo waypoints)
     }
 
     public float DistanceFrom(Vector3 otherPosition)
