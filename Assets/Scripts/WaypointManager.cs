@@ -62,13 +62,6 @@ public class WaypointManager : MonoBehaviour
         return newWaypoint;
     }
 
-    public Waypoint CreateWaypoint(Waypoint w){
-        waypoints.Add(w);
-        CreateVisual(w);
-
-        return w;
-    }
-
     private void CreateVisual(Waypoint waypoint)
     {
         if (waypointPrefab == null) return;
