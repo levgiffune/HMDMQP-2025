@@ -21,7 +21,7 @@ public class Waypoint
         Color c,
         Vector3 p,
         string n = "New Waypoint", 
-        string d = "",
+        string d = null,
         WaypointIconType i = WaypointIconType.Standard,
         bool a = true){
         id = Guid.NewGuid().ToString();
@@ -30,13 +30,12 @@ public class Waypoint
         desc = d;
         color = c;
         iconType = i;
-        isActive = a;
     }
 
     public Waypoint(
         Vector3 p, 
         string n = "New Waypoint", 
-        string d = "", 
+        string d = null, 
         WaypointIconType i = WaypointIconType.Standard,
         bool a = false){
         id = Guid.NewGuid().ToString();
@@ -45,7 +44,6 @@ public class Waypoint
         desc = d;
         color = Color.cyan;
         iconType = i;
-        isActive = a;
     }
 
     public float DistanceFrom(Vector3 otherPosition)
