@@ -61,6 +61,7 @@ public class WaypointVisual : MonoBehaviour
 
     public void SetSelected(bool selected)
     {
+        // Debug.Log(descriptionPanel);
         isSelected = selected;
 
         if (selectionIndicator != null)
