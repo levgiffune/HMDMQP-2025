@@ -10,6 +10,7 @@ public class WaypointListBuilder:MonoBehaviour{
     void Start(){
         foreach(Waypoint w in WaypointList){
             WaypointManager.Instance.CreateWaypoint(w);
+            WaypointMenuController.Instance.AddWaypointToListPublic(w);
         }
     }
 }
