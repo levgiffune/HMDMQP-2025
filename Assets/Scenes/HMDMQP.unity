@@ -1308,6 +1308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 481556167}
   - component: {fileID: 481556166}
+  - component: {fileID: 481556168}
   m_Layer: 0
   m_Name: WaypointManager
   m_TagString: Untagged
@@ -1345,6 +1346,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &481556168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481556165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c6d915f933d92488b2079dfe3299be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaypointList:
+  - id: 
+    name: Human-inspired Robots (HiRo) 200A
+    desc: The lab creates intuitive shared-autonomy interfaces for mobile humanoid
+      robots, advancing manipulation, adaptive interaction, AR communication, and
+      teleoperator training
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    color: {r: 0, g: 1, b: 0, a: 0}
+    iconType: 1
+  - id: 
+    name: Efficient Learning and Planning for Intelligent Systems Lab (ELPIS) 200B
+    desc: 'The Lab builds autonomous robots that learn from the real world, advancing
+      efficiency, robustness, and visual-based planning through the fusion of classical
+      planning and modern machine learning. '
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    color: {r: 0, g: 1, b: 0, a: 0}
+    iconType: 1
+  - id: 
+    name: 'Novel Engineering of Swarm Technologies (NEST) 200C '
+    desc: "The lab researches swarm robotics with a focus on coordination algorithms,
+      software engineering, and human\u2013swarm interaction. "
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    color: {r: 0, g: 1, b: 0, a: 0}
+    iconType: 1
+  - id: 
+    name: Manipulation and Environmental Robotics Lab (MER) 200D
+    desc: 'The MER Lab advances robotic manipulation through vision, control, and
+      machine learning, tackling environmental tasks like recycling and leading benchmarking
+      in dexterous manipulation and active vision. '
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    color: {r: 0, g: 1, b: 0, a: 0}
+    iconType: 1
+  - id: 
+    name: Adaptive and Intelligent Robotics Lab (AIR) 200E
+    desc: 'The AIR Lab studies adaptive robotic systems that use real-time perception,
+      planning, and learning for assembly, manipulation, and navigation in human-centered
+      and industrial environments. '
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    color: {r: 0, g: 1, b: 0, a: 0}
+    iconType: 1
+  - id: 
+    name: Safe Autonomy and Intelligence Lab (SAIL) 200F
+    desc: 'The SAIL Lab researches safety-critical control and trustworthy ML to
+      create autonomous systems that are both intelligent and certifiable. '
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    color: {r: 0, g: 1, b: 0, a: 0}
+    iconType: 1
 --- !u!1 &504967950
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,16 +2101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b4f828d79cbf043bfdc6b31369df03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 1203234341}
-  minimapBackground: {fileID: 52415564}
-  playerIcon: {fileID: 504967951}
-  waypointIconsContainer: {fileID: 1260673581}
-  waypointIconPrefab: {fileID: 4194925180572270322, guid: 64c29c57d9a83f14691f915a69d41972, type: 3}
-  minimapRadius: 100
-  worldRadius: 5
-  distanceFromCamera: 0.5
-  heightOffset: 0.1
-  horizontalOffset: 0.3
 --- !u!114 &1055158243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3165,9 +3221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd15f83a140e6c4fb7518f64332b5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 1203234341}
-  lineRenderer: {fileID: 1664254484}
-  startHeightOffset: 0.5
 --- !u!4 &1664254486
 Transform:
   m_ObjectHideFlags: 0
