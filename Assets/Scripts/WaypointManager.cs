@@ -32,12 +32,13 @@ public class WaypointManager : MonoBehaviour
         
         waypoints.Add(defaultWaypoint);
         CreateVisual(defaultWaypoint);
-        // End of default waypoint creation
+        
         
         if (WaypointMenuController.Instance != null)
         {
             WaypointMenuController.Instance.AddWaypointToListPublic(defaultWaypoint);
         }
+        // End of default waypoint creation
     }
 
     void Awake()
