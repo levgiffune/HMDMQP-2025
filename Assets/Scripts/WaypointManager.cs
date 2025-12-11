@@ -66,7 +66,6 @@ public class WaypointManager : MonoBehaviour
     public Waypoint CreateWaypoint(Waypoint w){
         waypoints.Add(w);
         CreateVisual(w);
-        WaypointMenuController.AddWaypointToListPublic(w);
 
         return w;
     }
