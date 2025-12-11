@@ -14,10 +14,8 @@ public class Waypoint
     public Quaternion rotation;
 
     public Color color;
-    public WaypointShape shape;
     public WaypointIconType iconType;
 
-    public bool isActive;
 
     public Waypoint(
         Color c,
@@ -67,12 +65,4 @@ public enum WaypointIconType
     Standard, 
     POI, 
     Warning
-}
-
-[System.Serializable]
-public enum WaypointShape
-{
-    Cube,
-    Sphere,
-    Capsule
 }

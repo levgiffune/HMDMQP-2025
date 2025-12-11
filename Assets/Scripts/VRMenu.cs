@@ -6,6 +6,7 @@ public class VRMenu : MonoBehaviour
     [SerializeField] private float distanceFromCamera = 2f;
     [SerializeField] private float heightOffset = 0f;
     [SerializeField] private bool followCamera = true;
+    
     public bool startVisible = false;
     
     private Canvas canvas;
