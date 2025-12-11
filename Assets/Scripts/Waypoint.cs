@@ -21,7 +21,7 @@ public class Waypoint
         Color c,
         Vector3 p,
         string n = "New Waypoint", 
-        string d = "",
+        string d = null,
         WaypointIconType i = WaypointIconType.Standard){
         id = Guid.NewGuid().ToString();
         position = p;
@@ -34,7 +34,7 @@ public class Waypoint
     public Waypoint(
         Vector3 p, 
         string n = "New Waypoint", 
-        string d = "", 
+        string d = null, 
         WaypointIconType i = WaypointIconType.Standard){
         id = Guid.NewGuid().ToString();
         position = p;
