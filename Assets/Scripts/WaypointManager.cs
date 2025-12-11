@@ -5,22 +5,41 @@ public class WaypointManager : MonoBehaviour
 {
     [Header("Prefab")]
     public GameObject waypointPrefab;
-    public Transform playerCamera;
 
     [Header("Compass")]
     public CompassManager compass;
+
     // ensure single instance of waypoint manager
     public static WaypointManager Instance {get; private set;}
 
-    // waypoint data representation
+    // reference to player camera for waypoint orientation
+    public Transform playerCamera;
+
     private List<Waypoint> waypoints = new List<Waypoint>(); 
-    // waypoint visual representation
     private List<WaypointVisual> activeVisuals = new List<WaypointVisual>();
-    private string highlightedWaypointId = null; 
 
     // getter for waypoints list
     public List<Waypoint> Waypoints => waypoints;
 
+    void Start()
+    {
+        // Start of default waypoint creation
+        Vector3 spawnPosition = playerCamera.position + playerCamera.forward * 1.5f;
+        Waypoint defaultWaypoint = new Waypoint(spawnPosition, "Home Base");
+        defaultWaypoint.desc = "This is your starting location.";
+        defaultWaypoint.color = Color.green;
+        defaultWaypoint.iconType = WaypointIconType.POI;
+        
+        waypoints.Add(defaultWaypoint);
+        CreateVisual(defaultWaypoint);
+        
+        
+        if (WaypointMenuController.Instance != null)
+        {
+            WaypointMenuController.Instance.AddWaypointToListPublic(defaultWaypoint);
+        }
+        // End of default waypoint creation
+    }
 
     void Awake()
     {
@@ -40,8 +59,6 @@ public class WaypointManager : MonoBehaviour
         Waypoint newWaypoint = new Waypoint(position, name);
         waypoints.Add(newWaypoint);
         CreateVisual(newWaypoint);
-
-
 
         return newWaypoint;
     }
@@ -92,22 +109,15 @@ public class WaypointManager : MonoBehaviour
         return visual != null ? visual.gameObject : null;
     }
 
-    public void HighlightWaypoint(string waypointId)
+    public void UpdateWaypointVisual(string waypointId)
     {
-        if (highlightedWaypointId != null)
-        {
-            WaypointVisual prevVisual = activeVisuals.Find(v => v.GetWaypointData().id == highlightedWaypointId);
-            if (prevVisual != null)
-            {
-                prevVisual.SetHighlighted(false);
-            }
-        }
-        
+        Waypoint waypoint = GetWaypoint(waypointId);
+        if (waypoint == null) return;
+
         WaypointVisual visual = activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
         if (visual != null)
         {
-            visual.SetHighlighted(true);
-            highlightedWaypointId = waypointId;
+            visual.UpdateAppearance(waypoint);
         }
     }
 }

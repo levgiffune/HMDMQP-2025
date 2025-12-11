@@ -73,7 +73,6 @@ public class CompassManager : MonoBehaviour
         float WaypointAngle = Quaternion.LookRotation(cast).eulerAngles.y;
         float delta = Mathf.DeltaAngle(yaw, WaypointAngle);
 
-        Debug.Log($"Waypoint angle delta: {delta}, Waypoint angle: {WaypointAngle}");
 
         RectTransform WaypointTransform = WaypointMarker.GetComponent<RectTransform>();
         WaypointTransform.anchoredPosition = new Vector2(
