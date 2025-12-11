@@ -17,15 +17,35 @@ public class Waypoint
 
     public bool isActive;
 
-    public Waypoint(Vector3 pos, string wpname = "New Waypoint")
-    {
+    public Waypoint(
+        Color c,
+        Vector3 p,
+        string n = "New Waypoint", 
+        string d = "",
+        WaypointIconType i = WaypointIconType.Standard,
+        bool a = true){
         id = Guid.NewGuid().ToString();
-        position = pos;
-        name = wpname;
-        desc = "";
+        position = p;
+        name = n;
+        desc = d;
+        color = c;
+        iconType = i;
+        isActive = a;
+    }
+
+    public Waypoint(
+        Vector3 p, 
+        string n = "New Waypoint", 
+        string d = "", 
+        WaypointIconType i = WaypointIconType.Standard,
+        bool a = false){
+        id = Guid.NewGuid().ToString();
+        position = p;
+        name = n;
+        desc = d;
         color = Color.cyan;
-        iconType = WaypointIconType.Standard;
-        isActive = true;
+        iconType = i;
+        isActive = a;
     }
 
     public float DistanceFrom(Vector3 otherPosition)
