@@ -2,21 +2,10 @@ using UnityEngine;
 
 public class PopupController : MonoBehaviour
 {
-    public Canvas canvas;
-    private bool isVisible = true;
+    public GameObject popupPanel;
 
-    void LateUpdate()
+    public void ClosePopup()
     {
-        HandleToggle();
-        if (!isVisible) return;
-    }
-
-    void HandleToggle()
-    {
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryThumbstick))
-        {
-            isVisible = !isVisible;
-            canvas.enabled = isVisible;
-        }
+        popupPanel.SetActive(false);
     }
 }
