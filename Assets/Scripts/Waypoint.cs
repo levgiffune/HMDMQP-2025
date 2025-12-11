@@ -22,30 +22,26 @@ public class Waypoint
         Vector3 p,
         string n = "New Waypoint", 
         string d = "",
-        WaypointIconType i = WaypointIconType.Standard,
-        bool a = true){
+        WaypointIconType i = WaypointIconType.Standard){
         id = Guid.NewGuid().ToString();
         position = p;
         name = n;
         desc = d;
         color = c;
         iconType = i;
-        isActive = a;
     }
 
     public Waypoint(
         Vector3 p, 
         string n = "New Waypoint", 
         string d = "", 
-        WaypointIconType i = WaypointIconType.Standard,
-        bool a = false){
+        WaypointIconType i = WaypointIconType.Standard){
         id = Guid.NewGuid().ToString();
         position = p;
         name = n;
         desc = d;
         color = Color.cyan;
         iconType = i;
-        isActive = a;
     }
 
     public float DistanceFrom(Vector3 otherPosition)
