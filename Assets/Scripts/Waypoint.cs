@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using TMPro;
 
 
 [System.Serializable]
@@ -15,7 +16,6 @@ public class Waypoint
     public Color color;
     public WaypointIconType iconType;
 
-    public bool isActive;
 
     public Waypoint(
         Color c,
@@ -66,4 +66,3 @@ public enum WaypointIconType
     POI, 
     Warning
 }
-
