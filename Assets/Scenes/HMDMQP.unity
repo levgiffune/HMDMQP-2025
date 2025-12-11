@@ -3121,7 +3121,6 @@ GameObject:
   m_Component:
   - component: {fileID: 481556167}
   - component: {fileID: 481556166}
-  - component: {fileID: 481556168}
   m_Layer: 0
   m_Name: WaypointManager
   m_TagString: Untagged
