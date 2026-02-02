@@ -56,7 +56,7 @@ public class CompassManager : MonoBehaviour
             return;
         }
 
-        if (!WaypointMarker.gameObject.active)
+        if (!WaypointMarker.gameObject.activeSelf)
         {
             WaypointMarker.gameObject.SetActive(true);
         }

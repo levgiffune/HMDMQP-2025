@@ -13,7 +13,7 @@ public class WaypointListBuilder:MonoBehaviour{
         Debug.Log($"WaypointList count: {WaypointList.Count}");
         foreach(Waypoint w in WaypointList){
             WaypointManager.Instance.CreateWaypoint(w);
-            WaypointMenuController.Instance.AddWaypointToListPublic(w);
+            WaypointMenuController.Instance.AddWaypointToList(w);
         }
     }
 }
