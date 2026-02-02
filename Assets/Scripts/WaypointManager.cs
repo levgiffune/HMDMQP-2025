@@ -60,8 +60,7 @@ public class WaypointManager : MonoBehaviour
 
     private void GenerateDemoWaypoint(Vector3 sp, string n, string d)
     {
-        Vector3 spawnPosition = sp;
-        Waypoint defaultWaypoint = new Waypoint(spawnPosition, n);
+        Waypoint defaultWaypoint = new Waypoint(sp, n);
         defaultWaypoint.desc = d;
         defaultWaypoint.color = Color.green;
         defaultWaypoint.iconType = WaypointIconType.POI;
@@ -72,7 +71,7 @@ public class WaypointManager : MonoBehaviour
         
         if (WaypointMenuController.Instance != null)
         {
-            WaypointMenuController.Instance.AddWaypointToListPublic(defaultWaypoint);
+            WaypointMenuController.Instance.AddWaypointToList(defaultWaypoint);
         }
     }
 
@@ -93,9 +92,9 @@ public class WaypointManager : MonoBehaviour
         if (toRemove != null)
         {
             waypoints.Remove(toRemove);
-            return true;
         }
-        return false;
+        RemoveVisual(wpid);
+        return toRemove != null;
     }
 
     public Waypoint GetWaypoint(string wpid)
@@ -112,6 +111,28 @@ public class WaypointManager : MonoBehaviour
     {
         WaypointVisual visual = activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
         return visual != null ? visual.gameObject : null;
+    }
+
+    public void RemoveVisual(string waypointId)
+    {
+        if (string.IsNullOrEmpty(waypointId)) return;
+
+        for (int i = 0; i < activeVisuals.Count; i++)
+        {
+            WaypointVisual visual = activeVisuals[i];
+            if (visual == null)
+            {
+                continue;
+            }
+
+            Waypoint data = visual.GetWaypointData();
+            if (data != null && data.id == waypointId)
+            {
+                activeVisuals.RemoveAt(i);
+                Destroy(visual.gameObject);
+                return;
+            }
+        }
     }
 
     public void UpdateWaypointVisual(string waypointId)

@@ -471,7 +471,7 @@ public class WaypointMenuController : MonoBehaviour
         }
     }
 
-    void AddWaypointToList(Waypoint waypoint)
+    public void AddWaypointToList(Waypoint waypoint)
     {
         if (waypointListItemPrefab == null || waypointListContainer == null) return;
 
@@ -481,17 +481,6 @@ public class WaypointMenuController : MonoBehaviour
 
         UpdatePageDisplay();
     }
-
-    public void AddWaypointToListPublic(Waypoint waypoint)
-        {
-            if (waypointListItemPrefab == null || waypointListContainer == null) return;
-
-            GameObject itemObj = Instantiate(waypointListItemPrefab, waypointListContainer);
-            WaypointListItem item = itemObj.GetComponent<WaypointListItem>();
-            item.Setup(waypoint);
-
-            UpdatePageDisplay();
-        }
 
     void DeleteSelectedWaypoint()
     {
@@ -516,9 +505,6 @@ public class WaypointMenuController : MonoBehaviour
 
             WaypointManager.Instance.DeleteWaypoint(wpId);
             Destroy(firstItem.gameObject);
-
-            GameObject firstVisual = WaypointManager.Instance.GetWaypointVisual(wpId);
-            Destroy(firstVisual);
 
             // Recalculate page if needed
             int pageCount = GetPageCount();
