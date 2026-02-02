@@ -2,10 +2,33 @@ using UnityEngine;
 
 public class PopupController : MonoBehaviour
 {
-    public GameObject popupPanel;
+    public Canvas canvas;
+    public Transform playerCamera;
+    private bool isVisible = true;
 
-    public void ClosePopup()
+
+    void Start()
     {
-        popupPanel.SetActive(false);
+        
+        if (playerCamera == null)
+        {
+            playerCamera = Camera.main.transform;
+        }
+    }
+
+    void LateUpdate()
+    {
+        HandleToggle();
+        
+        if (!isVisible) return;
+    }
+
+    void HandleToggle()
+    {
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryThumbstick))
+        {
+            isVisible = !isVisible;
+            canvas.enabled = isVisible;
+        }
     }
 }

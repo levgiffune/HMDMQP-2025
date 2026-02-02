@@ -314,7 +314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 843ba3f0b307d1b419d229e17a076bb2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1359,55 +1359,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaypointList:
-  - id: 
-    name: Human-inspired Robots (HiRo) 200A
-    desc: The lab creates intuitive shared-autonomy interfaces for mobile humanoid
-      robots, advancing manipulation, adaptive interaction, AR communication, and
-      teleoperator training
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
-    color: {r: 0, g: 1, b: 0, a: 0}
-    iconType: 1
-  - id: 
-    name: Efficient Learning and Planning for Intelligent Systems Lab (ELPIS) 200B
-    desc: 'The Lab builds autonomous robots that learn from the real world, advancing
-      efficiency, robustness, and visual-based planning through the fusion of classical
-      planning and modern machine learning. '
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
-    color: {r: 0, g: 1, b: 0, a: 0}
-    iconType: 1
-  - id: 
+  - id: 1
     name: 'Novel Engineering of Swarm Technologies (NEST) 200C '
     desc: "The lab researches swarm robotics with a focus on coordination algorithms,
       software engineering, and human\u2013swarm interaction. "
-    position: {x: 0, y: 0, z: 0}
+    position: {x: -2.302501, y: 0.2598864, z: -6}
     rotation: {x: 0, y: 0, z: 0, w: 0}
     color: {r: 0, g: 1, b: 0, a: 0}
     iconType: 1
-  - id: 
+  - id: 2
+    name: Safe Autonomy and Intelligence Lab (SAIL) 200F
+    desc: The SAIL Lab researches safety-critical control and trustworthy ML to create
+      autonomous systems that are both intelligent and certifiable.
+    position: {x: 1, y: 0.6905681, z: 3.181281}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    color: {r: 0, g: 1, b: 0, a: 0}
+    iconType: 1
+  - id: 3
     name: Manipulation and Environmental Robotics Lab (MER) 200D
     desc: 'The MER Lab advances robotic manipulation through vision, control, and
       machine learning, tackling environmental tasks like recycling and leading benchmarking
       in dexterous manipulation and active vision. '
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
-    color: {r: 0, g: 1, b: 0, a: 0}
-    iconType: 1
-  - id: 
-    name: Adaptive and Intelligent Robotics Lab (AIR) 200E
-    desc: 'The AIR Lab studies adaptive robotic systems that use real-time perception,
-      planning, and learning for assembly, manipulation, and navigation in human-centered
-      and industrial environments. '
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
-    color: {r: 0, g: 1, b: 0, a: 0}
-    iconType: 1
-  - id: 
-    name: Safe Autonomy and Intelligence Lab (SAIL) 200F
-    desc: 'The SAIL Lab researches safety-critical control and trustworthy ML to
-      create autonomous systems that are both intelligent and certifiable. '
-    position: {x: 0, y: 0, z: 0}
+    position: {x: -1.149587, y: 0.8003863, z: -3.85508}
     rotation: {x: 0, y: 0, z: 0, w: 0}
     color: {r: 0, g: 1, b: 0, a: 0}
     iconType: 1
@@ -1468,7 +1441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300014, guid: 215687feeab0b7445b4a1cd86c82c2e1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 861c22f8de789a348af09e6cb8b83eb2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2105,9 +2078,9 @@ MonoBehaviour:
   minimapBackground: {fileID: 52415564}
   playerIcon: {fileID: 504967951}
   waypointIconsContainer: {fileID: 1260673581}
-  waypointIconPrefab: {fileID: 4194925180572270322, guid: 64c29c57d9a83f14691f915a69d41972, type: 3}
+  waypointIconPrefab: {fileID: 4467116132931756166, guid: 64c29c57d9a83f14691f915a69d41972, type: 3}
   minimapRadius: 100
-  worldRadius: 10
+  worldRadius: 5
   distanceFromCamera: 0.5
   heightOffset: 0.1
   horizontalOffset: 0.3
@@ -2602,6 +2575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 223940187}
+  playerCamera: {fileID: 0}
 --- !u!4 &1284343894
 Transform:
   m_ObjectHideFlags: 0
@@ -3231,6 +3205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd15f83a140e6c4fb7518f64332b5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 1203234341}
+  lineRenderer: {fileID: 1664254484}
+  startHeightOffset: 0.5
 --- !u!4 &1664254486
 Transform:
   m_ObjectHideFlags: 0

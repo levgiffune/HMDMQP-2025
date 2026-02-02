@@ -26,6 +26,7 @@ public class WaypointManager : MonoBehaviour
         // Start of default waypoint creation
         Vector3 hb = playerCamera.position + playerCamera.forward * 1.5f;
         GenerateDemoWaypoint(hb, "Home Base", "This is your starting point.");
+        
     }
 
     void Awake()

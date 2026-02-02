@@ -457,6 +457,10 @@ public class WaypointMenuController : MonoBehaviour
                     visual.SetSelected(true);
                     currentlySelectedVisual = visual;
                 }
+                if (WaypointLineConnector.Instance != null)
+                {
+                    WaypointLineConnector.Instance.SetTarget(visualObj.transform);
+                }
             }
 
             if (item != null)
@@ -506,6 +510,8 @@ public class WaypointMenuController : MonoBehaviour
             {
                 selectedWaypointId = null;
                 currentlySelectedVisual = null;
+                currentlySelectedListItem = null;
+                WaypointLineConnector.Instance.ClearTarget();
             }
 
             WaypointManager.Instance.DeleteWaypoint(wpId);
