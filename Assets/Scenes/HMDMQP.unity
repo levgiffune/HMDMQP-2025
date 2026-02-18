@@ -601,7 +601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &223940184
 RectTransform:
   m_ObjectHideFlags: 0
@@ -610,7 +610,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223940183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0.8}
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.002}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -773,7 +773,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3f4bc84780bc3164193c2698341bea99, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b23ae67905ad8842b28a21e1043aac2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'E
+  m_text: 'Edit
 
 '
   m_isRightToLeft: 0
@@ -1045,13 +1045,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1246,7 +1246,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 24.8, y: -63}
+  m_AnchoredPosition: {x: -13.1, y: -63}
   m_SizeDelta: {x: 21.54, y: 16.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &476328687 stripped
@@ -1663,7 +1663,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 208, y: 174}
-  m_SizeDelta: {x: 40, y: 20}
+  m_SizeDelta: {x: 30, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &833531140
 MonoBehaviour:
@@ -2535,7 +2535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c48bd5d665d1ed54f872d25bbb0777ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupPanel: {fileID: 102978800}
+  canvas: {fileID: 0}
 --- !u!4 &1284343894
 Transform:
   m_ObjectHideFlags: 0
@@ -2725,7 +2725,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -29.7, y: -63}
+  m_AnchoredPosition: {x: -35.6, y: -63}
   m_SizeDelta: {x: 21.54, y: 16.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1522243110
@@ -3322,7 +3322,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.6, y: -63}
+  m_AnchoredPosition: {x: 35.7, y: -63}
   m_SizeDelta: {x: 21.54, y: 16.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2006101540
