@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class WaypointManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class WaypointManager : MonoBehaviour
 
     [Header("Compass")]
     public CompassManager compass;
+
+    [Header("Demo Assets")]
+    public GameObject demoPreviewPrefab;
 
     // ensure single instance of waypoint manager
     public static WaypointManager Instance {get; private set;}
@@ -25,7 +29,7 @@ public class WaypointManager : MonoBehaviour
     {
         // Start of default waypoint creation
         Vector3 hb = playerCamera.position + playerCamera.forward * 1.5f;
-        GenerateDemoWaypoint(hb, "Home Base", "This is your starting point.");
+        GenerateDemoWaypoint(hb, "Home Base", "Network access point. All waypoint widgets are active on this marker: description panel, media display, and preview orb.");
         
     }
 
@@ -64,11 +68,24 @@ public class WaypointManager : MonoBehaviour
         defaultWaypoint.desc = d;
         defaultWaypoint.color = Color.green;
         defaultWaypoint.iconType = WaypointIconType.POI;
-        
+
+        // Images for info card carousel
+        Texture2D[] demoImages = Resources.LoadAll<Texture2D>("DemoMedia");
+        if (demoImages != null && demoImages.Length > 0)
+            defaultWaypoint.images = demoImages;
+
+        // Video for WaypointMediaDisplay
+        VideoClip demoVideo = Resources.Load<VideoClip>("DemoMedia/boston_atlas");
+        if (demoVideo != null)
+            defaultWaypoint.videoClip = demoVideo;
+
+        // Preview prefab for WaypointPreviewOrb
+        if (demoPreviewPrefab != null)
+            defaultWaypoint.previewPrefab = demoPreviewPrefab;
+
         waypoints.Add(defaultWaypoint);
         CreateVisual(defaultWaypoint);
-        
-        
+
         if (WaypointMenuController.Instance != null)
         {
             WaypointMenuController.Instance.AddWaypointToList(defaultWaypoint);

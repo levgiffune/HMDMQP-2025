@@ -1330,6 +1330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaypointManager
   waypointPrefab: {fileID: 7110543068991805835, guid: b50177d9e2a9cfa4f82a3918c2a37f58, type: 3}
   compass: {fileID: 1812045599}
+  demoPreviewPrefab: {fileID: 0}
   playerCamera: {fileID: 1203234341}
 --- !u!4 &481556167
 Transform:
@@ -1367,6 +1368,10 @@ MonoBehaviour:
     rotation: {x: 0, y: 0, z: 0, w: 0}
     color: {r: 0, g: 1, b: 0, a: 0}
     iconType: 1
+    imageRef: {fileID: 0}
+    images: []
+    videoClip: {fileID: 0}
+    previewPrefab: {fileID: 0}
   - id: 2
     name: Safe Autonomy and Intelligence Lab (SAIL) 200F
     desc: The SAIL Lab researches safety-critical control and trustworthy ML to create
@@ -1375,6 +1380,10 @@ MonoBehaviour:
     rotation: {x: 0, y: 0, z: 0, w: 0}
     color: {r: 0, g: 1, b: 0, a: 0}
     iconType: 1
+    imageRef: {fileID: 0}
+    images: []
+    videoClip: {fileID: 0}
+    previewPrefab: {fileID: 0}
   - id: 3
     name: Manipulation and Environmental Robotics Lab (MER) 200D
     desc: 'The MER Lab advances robotic manipulation through vision, control, and
@@ -1384,6 +1393,10 @@ MonoBehaviour:
     rotation: {x: 0, y: 0, z: 0, w: 0}
     color: {r: 0, g: 1, b: 0, a: 0}
     iconType: 1
+    imageRef: {fileID: 0}
+    images: []
+    videoClip: {fileID: 0}
+    previewPrefab: {fileID: 0}
 --- !u!1 &504967950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,37 +1976,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &940742782
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 940742783}
-  m_Layer: 0
-  m_Name: 
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &940742783
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940742782}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1053992916 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100006, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
@@ -3589,7 +3571,6 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 940742783}
   - {fileID: 697210160}
   - {fileID: 1176258620}
   - {fileID: 1203234340}

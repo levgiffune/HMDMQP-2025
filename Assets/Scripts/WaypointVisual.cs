@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class WaypointVisual : MonoBehaviour
 {
@@ -19,13 +20,28 @@ public class WaypointVisual : MonoBehaviour
     public GameObject descriptionPanel;
     public TextMeshProUGUI waypointNameText;
     public TextMeshProUGUI descriptionText;
+    public RawImage infoCardImage;
+    public float showInfoDistance = 0f;
+    public float imageCarouselInterval = 3f;
+
+    [Header("Floating Label")]
+    public bool applyLabelOffset = false;
+    public Vector3 labelOffset = new Vector3(0f, 0.3f, 0f);
+    public float labelVisibleDistance = 0f;
+
+    [Header("Optional Widgets")]
+    public WaypointMediaDisplay mediaDisplay;
+    public WaypointPreviewOrb previewOrb;
 
     private GameObject currentShapeObject;
     private MeshRenderer currentRenderer;
     private Waypoint waypointData;
     private Transform cameraTransform;
     private bool isSelected = false;
-    private bool hasDesc = false;
+    private bool hasInfoContent = false;
+    private Texture2D[] carouselImages;
+    private int carouselIndex = 0;
+    private float carouselTimer = 0f;
 
     public void Initialize(Waypoint waypoint, Transform playerCamera)
     {
@@ -35,13 +51,17 @@ public class WaypointVisual : MonoBehaviour
         transform.position = waypoint.position;
         transform.rotation = waypoint.rotation;
 
-        if (labelText != null)
+        if (mediaDisplay != null)
         {
-            labelText.text = waypoint.name;
+            mediaDisplay.Initialize(waypoint, playerCamera, transform);
+        }
+
+        if (previewOrb != null)
+        {
+            previewOrb.Initialize(waypoint, playerCamera, transform);
         }
 
         UpdateAppearance(waypoint);
-        GenerateDescriptionPanel(waypoint);
     }
 
     private void Update()
@@ -51,6 +71,10 @@ public class WaypointVisual : MonoBehaviour
             transform.LookAt(cameraTransform);
             transform.Rotate(0, 180, 0);
         }
+
+        UpdateInfoCardVisibility();
+        UpdateLabelVisibility();
+        UpdateCarousel();
     }
 
 
@@ -69,9 +93,16 @@ public class WaypointVisual : MonoBehaviour
             selectionIndicator.SetActive(selected);
         }
 
-        if (hasDesc && descriptionPanel != null)
+        UpdateInfoCardVisibility();
+
+        if (mediaDisplay != null)
         {
-            descriptionPanel.SetActive(selected);
+            mediaDisplay.SetSelected(selected);
+        }
+
+        if (previewOrb != null)
+        {
+            previewOrb.SetSelected(selected);
         }
     }
 
@@ -81,6 +112,18 @@ public class WaypointVisual : MonoBehaviour
 
         UpdateShape(waypoint.iconType);
         UpdateColor(waypoint.color);
+        RefreshLabel(waypoint);
+        RefreshInfoCard(waypoint);
+
+        if (mediaDisplay != null)
+        {
+            mediaDisplay.Refresh(waypoint);
+        }
+
+        if (previewOrb != null)
+        {
+            previewOrb.Refresh(waypoint);
+        }
     }
 
     public void PreviewAppearance(Color color, WaypointIconType iconType)
@@ -136,11 +179,154 @@ public class WaypointVisual : MonoBehaviour
 
     public void GenerateDescriptionPanel(Waypoint waypoint)
     {
-        if (waypoint.desc != null && descriptionPanel != null)
+        RefreshInfoCard(waypoint);
+    }
+
+    private void RefreshLabel(Waypoint waypoint)
+    {
+        if (labelText == null || waypoint == null)
         {
-            waypointNameText.text = waypointData.name;
-            descriptionText.text = waypointData.desc;
-            hasDesc = true;
+            return;
         }
+
+        labelText.text = waypoint.name;
+
+        if (applyLabelOffset)
+        {
+            labelText.transform.localPosition = labelOffset;
+        }
+    }
+
+    private void RefreshInfoCard(Waypoint waypoint)
+    {
+        if (waypoint == null)
+        {
+            hasInfoContent = false;
+            carouselImages = null;
+            UpdateInfoCardVisibility();
+            return;
+        }
+
+        if (descriptionPanel == null)
+        {
+            hasInfoContent = false;
+            carouselImages = null;
+            return;
+        }
+
+        bool hasDescription = !string.IsNullOrWhiteSpace(waypoint.desc);
+
+        // Build carousel array: images array first, fall back to single imageRef
+        if (waypoint.images != null && waypoint.images.Length > 0)
+        {
+            carouselImages = waypoint.images;
+        }
+        else if (waypoint.imageRef != null)
+        {
+            carouselImages = new Texture2D[] { waypoint.imageRef };
+        }
+        else
+        {
+            carouselImages = null;
+        }
+
+        bool hasImage = carouselImages != null && carouselImages.Length > 0;
+
+        if (waypointNameText != null)
+        {
+            waypointNameText.text = waypoint.name;
+        }
+
+        if (descriptionText != null)
+        {
+            descriptionText.text = hasDescription ? waypoint.desc : string.Empty;
+        }
+
+        if (infoCardImage != null)
+        {
+            if (hasImage)
+            {
+                carouselIndex = 0;
+                carouselTimer = 0f;
+                infoCardImage.texture = carouselImages[0];
+                infoCardImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                infoCardImage.texture = null;
+                infoCardImage.gameObject.SetActive(false);
+            }
+        }
+
+        hasInfoContent = hasDescription || hasImage;
+        UpdateInfoCardVisibility();
+    }
+
+    private void UpdateCarousel()
+    {
+        if (carouselImages == null || carouselImages.Length <= 1 || infoCardImage == null)
+        {
+            return;
+        }
+
+        if (!descriptionPanel.activeSelf)
+        {
+            return;
+        }
+
+        carouselTimer += Time.deltaTime;
+        if (carouselTimer >= imageCarouselInterval)
+        {
+            carouselTimer = 0f;
+            carouselIndex = (carouselIndex + 1) % carouselImages.Length;
+            infoCardImage.texture = carouselImages[carouselIndex];
+        }
+    }
+
+    private void UpdateInfoCardVisibility()
+    {
+        if (descriptionPanel == null)
+        {
+            return;
+        }
+
+        bool shouldShow = hasInfoContent && (isSelected || IsWithinDistance(showInfoDistance));
+        if (descriptionPanel.activeSelf != shouldShow)
+        {
+            descriptionPanel.SetActive(shouldShow);
+        }
+    }
+
+    private void UpdateLabelVisibility()
+    {
+        if (labelText == null)
+        {
+            return;
+        }
+
+        if (labelVisibleDistance <= 0f || cameraTransform == null || waypointData == null)
+        {
+            if (!labelText.gameObject.activeSelf)
+            {
+                labelText.gameObject.SetActive(true);
+            }
+            return;
+        }
+
+        bool shouldShow = waypointData.DistanceFrom(cameraTransform.position) <= labelVisibleDistance;
+        if (labelText.gameObject.activeSelf != shouldShow)
+        {
+            labelText.gameObject.SetActive(shouldShow);
+        }
+    }
+
+    private bool IsWithinDistance(float maxDistance)
+    {
+        if (maxDistance <= 0f || cameraTransform == null || waypointData == null)
+        {
+            return false;
+        }
+
+        return waypointData.DistanceFrom(cameraTransform.position) <= maxDistance;
     }
 }

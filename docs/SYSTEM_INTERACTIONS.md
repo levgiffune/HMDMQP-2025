@@ -85,6 +85,19 @@ How the major systems communicate and depend on each other.
 └─────────────────────────┘                    └─────────────────────────┘
 ```
 
+### WaypointVisual → In-World Widgets
+
+```
+┌─────────────────────────┐                    ┌─────────────────────────┐
+│     WaypointVisual      │                    │   Widget Components     │
+│                         │                    │                         │
+│  Initialize() ──────────┼───────────────────►│ MediaDisplay.Init()      │
+│                         │                    │ PreviewOrb.Init()        │
+│  SetSelected() ─────────┼───────────────────►│ Show/hide media + preview│
+│  UpdateAppearance() ────┼───────────────────►│ Refresh info card media  │
+└─────────────────────────┘                    └─────────────────────────┘
+```
+
 ### WaypointMenuController → Navigation Aids
 
 ```

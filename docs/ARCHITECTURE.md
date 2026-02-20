@@ -9,6 +9,7 @@ A VR waypoint navigation application for Meta Quest built with Unity.
 **HMDMQP-2025** is a spatial VR application that allows users to create, manage, visualize, and navigate to waypoints in a 3D environment using Meta Quest hardware.
 
 ### Technology Stack
+
 - **Engine**: Unity (URP v17.2)
 - **XR Framework**: Meta XR SDK v78.0.0
 - **Input**: Unity Input System + OVR Input
@@ -81,6 +82,7 @@ A VR waypoint navigation application for Meta Quest built with Unity.
 │   │   • name: string                • iconType: IconType            │      │
 │   │   • description: string         • position: Vector3             │      │
 │   │   • rotation: Quaternion                                        │      │
+│   │   • imageRef/videoClip/previewPrefab (optional)                 │      │
 │   └─────────────────────────────────────────────────────────────────┘      │
 └─────────────────────────────────────┬───────────────────────────────────────┘
                                       │
@@ -137,49 +139,55 @@ A VR waypoint navigation application for Meta Quest built with Unity.
 ## Core Systems
 
 ### 1. Waypoint System
+
 The central feature of the application - manages spatial markers in the VR world.
 
-| Component | Responsibility |
-|-----------|---------------|
-| **Waypoint** | Data model: id, name, position, color, iconType |
-| **WaypointManager** | Singleton managing waypoint lifecycle (CRUD) |
-| **WaypointVisual** | 3D rendering with billboard effect |
-| **WaypointLineConnector** | Guide line from camera to selected waypoint |
+| Component                 | Responsibility                                                             |
+| ------------------------- | -------------------------------------------------------------------------- |
+| **Waypoint**              | Data model: id, name, desc, position, color, iconType, optional media refs |
+| **WaypointManager**       | Singleton managing waypoint lifecycle (CRUD)                               |
+| **WaypointVisual**        | 3D rendering, floating label, expandable info card                         |
+| **WaypointMediaDisplay**  | Optional image/video billboard near waypoint                               |
+| **WaypointPreviewOrb**    | Optional 3D preview prefab with slow rotation                              |
+| **WaypointLineConnector** | Guide line from camera to selected waypoint                                |
 
 ### 2. UI/Menu System
+
 VR-optimized menu interface with thumbstick navigation.
 
-| Component | Responsibility |
-|-----------|---------------|
-| **VRMenu** | Canvas that follows camera (2m in front) |
-| **VRMenuToggle** | Input binding to show/hide menu |
+| Component                  | Responsibility                               |
+| -------------------------- | -------------------------------------------- |
+| **VRMenu**                 | Canvas that follows camera (2m in front)     |
+| **VRMenuToggle**           | Input binding to show/hide menu              |
 | **WaypointMenuController** | Navigation state, Create/Delete/Edit actions |
-| **WaypointListItem** | Individual list item with edit panel |
+| **WaypointListItem**       | Individual list item with edit panel         |
 
 ### 3. Compass System
+
 Real-time orientation showing waypoint direction.
 
-| Component | Responsibility |
-|-----------|---------------|
+| Component          | Responsibility                                               |
+| ------------------ | ------------------------------------------------------------ |
 | **CompassManager** | Updates compass based on player heading and waypoint bearing |
 
 ### 4. Minimap System
+
 Bird's-eye view of player and waypoints.
 
-| Component | Responsibility |
-|-----------|---------------|
+| Component             | Responsibility                                                          |
+| --------------------- | ----------------------------------------------------------------------- |
 | **MinimapController** | Positions minimap, manages waypoint icons, calculates polar coordinates |
 
 ---
 
 ## Design Patterns
 
-| Pattern | Usage |
-|---------|-------|
-| **Singleton** | WaypointManager, WaypointMenuController, CompassManager, MinimapController |
-| **Model-View** | Waypoint (data) ↔ WaypointVisual (view) |
-| **Factory** | WaypointManager creates waypoints and visuals |
-| **DontDestroyOnLoad** | Managers persist across scenes |
+| Pattern               | Usage                                                                      |
+| --------------------- | -------------------------------------------------------------------------- |
+| **Singleton**         | WaypointManager, WaypointMenuController, CompassManager, MinimapController |
+| **Model-View**        | Waypoint (data) ↔ WaypointVisual (view)                                    |
+| **Factory**           | WaypointManager creates waypoints and visuals                              |
+| **DontDestroyOnLoad** | Managers persist across scenes                                             |
 
 ---
 

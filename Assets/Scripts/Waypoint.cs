@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Video;
 
 
 [System.Serializable]
@@ -15,6 +16,12 @@ public class Waypoint
 
     public Color color;
     public WaypointIconType iconType;
+
+    [Header("Optional Media")]
+    public Texture2D imageRef;
+    public Texture2D[] images;
+    public VideoClip videoClip;
+    public GameObject previewPrefab;
 
 
     public Waypoint(
