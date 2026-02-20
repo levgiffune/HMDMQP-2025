@@ -24,7 +24,7 @@ public class WaypointListBuilder:MonoBehaviour{
 
         foreach(Waypoint w in Waypoints){
             WaypointManager.Instance.CreateWaypoint(w);
-            WaypointMenuController.Instance.AddWaypointToListPublic(w);
+            WaypointMenuController.Instance.AddWaypointToList(w);
         }
     }
 }

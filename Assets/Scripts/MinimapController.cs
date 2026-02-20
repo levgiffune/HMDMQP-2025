@@ -94,21 +94,7 @@ public class MinimapController : MonoBehaviour
         CleanupDeletedWaypoints();
     }
 
-    void CreateWaypointIcon(Waypoint waypoint)
-    {
-        GameObject iconObj = Instantiate(waypointIconPrefab, waypointIconsContainer);
-        RectTransform iconRect = iconObj.GetComponent<RectTransform>();
-        
-        Image iconImage = iconObj.GetComponent<Image>();
-        if (iconImage != null)
-        {
-            iconImage.color = waypoint.color;
-        }
-
-        waypointIcons.Add(waypoint.id, iconRect);
-    }
-
-    public void CreateWaypointIconPublic(Waypoint waypoint)
+    public void CreateWaypointIcon(Waypoint waypoint)
     {
         GameObject iconObj = Instantiate(waypointIconPrefab, waypointIconsContainer);
         RectTransform iconRect = iconObj.GetComponent<RectTransform>();
