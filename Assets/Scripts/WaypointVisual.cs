@@ -38,6 +38,7 @@ public class WaypointVisual : MonoBehaviour
     private Waypoint waypointData;
     private Transform cameraTransform;
     private bool isSelected = false;
+    private GameObject spawnedPreview;
     private bool hasInfoContent = false;
     private Texture2D[] carouselImages;
     private int carouselIndex = 0;
@@ -75,6 +76,9 @@ public class WaypointVisual : MonoBehaviour
         UpdateInfoCardVisibility();
         UpdateLabelVisibility();
         UpdateCarousel();
+
+        if (spawnedPreview != null)
+            spawnedPreview.transform.Rotate(0f, 20f * Time.deltaTime, 0f, Space.World);
     }
 
 
@@ -103,6 +107,25 @@ public class WaypointVisual : MonoBehaviour
         if (previewOrb != null)
         {
             previewOrb.SetSelected(selected);
+        }
+
+        // Spawn / destroy inline preview prefab (e.g. NurseBot)
+        if (selected && waypointData != null && waypointData.previewPrefab != null)
+        {
+            if (spawnedPreview == null)
+            {
+                spawnedPreview = Instantiate(waypointData.previewPrefab, transform);
+                spawnedPreview.transform.localPosition = new Vector3(0.3f, 0.3f, 0f);
+                spawnedPreview.transform.localScale = Vector3.one * 100f;
+            }
+        }
+        else
+        {
+            if (spawnedPreview != null)
+            {
+                Destroy(spawnedPreview);
+                spawnedPreview = null;
+            }
         }
     }
 

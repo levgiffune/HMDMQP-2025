@@ -29,7 +29,7 @@ public class WaypointManager : MonoBehaviour
     {
         // Start of default waypoint creation
         Vector3 hb = playerCamera.position + playerCamera.forward * 1.5f;
-        GenerateDemoWaypoint(hb, "Home Base", "Network access point. All waypoint widgets are active on this marker: description panel, media display, and preview orb.");
+        GenerateDemoWaypoint(hb, "Home Base", "Where it all started. This is where the team does most of their in-lab work.");
         
     }
 
@@ -79,7 +79,9 @@ public class WaypointManager : MonoBehaviour
         if (demoVideo != null)
             defaultWaypoint.videoClip = demoVideo;
 
-        // Preview prefab for WaypointPreviewOrb
+        // Preview prefab — use Inspector reference, fall back to hardcoded load
+        if (demoPreviewPrefab == null)
+            demoPreviewPrefab = Resources.Load<GameObject>("NurseBot");
         if (demoPreviewPrefab != null)
             defaultWaypoint.previewPrefab = demoPreviewPrefab;
 

@@ -45,6 +45,7 @@ public class WaypointPreviewOrb : MonoBehaviour
 
     public void Refresh(Waypoint waypoint)
     {
+        Debug.Log($"PreviewOrb Refresh: prefab={(waypoint?.previewPrefab != null ? waypoint.previewPrefab.name : "NULL")}, instance={previewInstance?.name}");
         waypointData = waypoint;
         hasContent = false;
 
@@ -72,6 +73,7 @@ public class WaypointPreviewOrb : MonoBehaviour
     {
         isSelected = selected;
         UpdateVisibility();
+        Debug.Log($"PreviewOrb SetSelected({selected}), hasContent={hasContent}, orbRootactive={orbRoot?.gameObject.activeSelf}");
     }
 
     private void RotatePreview()

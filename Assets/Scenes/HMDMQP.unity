@@ -1330,7 +1330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaypointManager
   waypointPrefab: {fileID: 7110543068991805835, guid: b50177d9e2a9cfa4f82a3918c2a37f58, type: 3}
   compass: {fileID: 1812045599}
-  demoPreviewPrefab: {fileID: 0}
+  demoPreviewPrefab: {fileID: 9104648292545346854, guid: ed4a90fd5571b3a4492a28ebac0e2686, type: 3}
   playerCamera: {fileID: 1203234341}
 --- !u!4 &481556167
 Transform:
@@ -2181,7 +2181,7 @@ MonoBehaviour:
   shape: 0
   curveRadius: 1
   overlapMask: 0
-  overlayType: 1
+  overlayType: 2
   _overlayEnabled: 1
 --- !u!114 &1176258616
 MonoBehaviour:

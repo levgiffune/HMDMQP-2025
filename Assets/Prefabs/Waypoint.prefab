@@ -241,6 +241,7 @@ MonoBehaviour:
   descriptionText: {fileID: 2085358751304817116}
   infoCardImage: {fileID: 5061560625114929991}
   showInfoDistance: 0
+  imageCarouselInterval: 3
   applyLabelOffset: 0
   labelOffset: {x: 0, y: 0.3, z: 0}
   labelVisibleDistance: 0
@@ -281,7 +282,7 @@ MonoBehaviour:
   showPreviewDistance: 0
   showOnlyWhenSelected: 0
   previewOffset: {x: 0.2, y: 0.2, z: 0}
-  previewScale: 0.3
+  previewScale: 1
   rotationSpeedDegreesPerSecond: 20
 --- !u!1 &8010000000000000001
 GameObject:
