@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Video;
 
 public class WaypointManager : MonoBehaviour
 {
@@ -10,28 +10,17 @@ public class WaypointManager : MonoBehaviour
     [Header("Compass")]
     public CompassManager compass;
 
-    [Header("Demo Assets")]
-    public GameObject demoPreviewPrefab;
+    // Singleton
+    public static WaypointManager Instance { get; private set; }
 
-    // ensure single instance of waypoint manager
-    public static WaypointManager Instance {get; private set;}
-
-    // reference to player camera for waypoint orientation
+    // Reference to player camera for waypoint orientation
     public Transform playerCamera;
 
-    private List<Waypoint> waypoints = new List<Waypoint>(); 
+    private List<Waypoint> waypoints = new List<Waypoint>();
     private List<WaypointVisual> activeVisuals = new List<WaypointVisual>();
 
-    // getter for waypoints list
+    // Getter for waypoints list
     public List<Waypoint> Waypoints => waypoints;
-
-    void Start()
-    {
-        // Start of default waypoint creation
-        Vector3 hb = playerCamera.position + playerCamera.forward * 1.5f;
-        GenerateDemoWaypoint(hb, "Home Base", "Where it all started. This is where the team does most of their in-lab work.");
-        
-    }
 
     void Awake()
     {
@@ -46,52 +35,15 @@ public class WaypointManager : MonoBehaviour
         }
     }
 
-    public Waypoint CreateWaypoint(Vector3 position, string name = "New Waypoint")
+    /// <summary>
+    /// Register a predefined waypoint and create its visual.
+    /// Called by WaypointListBuilder on startup.
+    /// </summary>
+    public Waypoint CreateWaypoint(Waypoint w)
     {
-        Waypoint newWaypoint = new Waypoint(position, name);
-        waypoints.Add(newWaypoint);
-        CreateVisual(newWaypoint);
-
-        return newWaypoint;
-    }
-
-    public Waypoint CreateWaypoint(Waypoint w){
         waypoints.Add(w);
         CreateVisual(w);
-
         return w;
-    }
-
-    private void GenerateDemoWaypoint(Vector3 sp, string n, string d)
-    {
-        Waypoint defaultWaypoint = new Waypoint(sp, n);
-        defaultWaypoint.desc = d;
-        defaultWaypoint.color = Color.green;
-        defaultWaypoint.iconType = WaypointIconType.POI;
-
-        // Images for info card carousel
-        Texture2D[] demoImages = Resources.LoadAll<Texture2D>("DemoMedia");
-        if (demoImages != null && demoImages.Length > 0)
-            defaultWaypoint.images = demoImages;
-
-        // Video for WaypointMediaDisplay
-        VideoClip demoVideo = Resources.Load<VideoClip>("DemoMedia/boston_atlas");
-        if (demoVideo != null)
-            defaultWaypoint.videoClip = demoVideo;
-
-        // Preview prefab — use Inspector reference, fall back to hardcoded load
-        if (demoPreviewPrefab == null)
-            demoPreviewPrefab = Resources.Load<GameObject>("NurseBot");
-        if (demoPreviewPrefab != null)
-            defaultWaypoint.previewPrefab = demoPreviewPrefab;
-
-        waypoints.Add(defaultWaypoint);
-        CreateVisual(defaultWaypoint);
-
-        if (WaypointMenuController.Instance != null)
-        {
-            WaypointMenuController.Instance.AddWaypointToList(defaultWaypoint);
-        }
     }
 
     private void CreateVisual(Waypoint waypoint)
@@ -99,31 +51,14 @@ public class WaypointManager : MonoBehaviour
         if (waypointPrefab == null) return;
 
         GameObject visualObj = Instantiate(waypointPrefab);
-        compass.Waypoint = visualObj;
         WaypointVisual visual = visualObj.GetComponent<WaypointVisual>();
         visual.Initialize(waypoint, playerCamera);
         activeVisuals.Add(visual);
     }
 
-    public bool DeleteWaypoint(string wpid)
-    {
-        Waypoint toRemove = waypoints.Find(w => w.id == wpid);
-        if (toRemove != null)
-        {
-            waypoints.Remove(toRemove);
-        }
-        RemoveVisual(wpid);
-        return toRemove != null;
-    }
-
     public Waypoint GetWaypoint(string wpid)
     {
         return waypoints.Find(w => w.id == wpid);
-    }
-
-    public void ClearAllWaypoints()
-    {
-        waypoints.Clear();
     }
 
     public GameObject GetWaypointVisual(string waypointId)
@@ -132,37 +67,22 @@ public class WaypointManager : MonoBehaviour
         return visual != null ? visual.gameObject : null;
     }
 
-    public void RemoveVisual(string waypointId)
+    /// <summary>
+    /// Returns waypoints that have a tourOrder >= 0, sorted by tourOrder.
+    /// </summary>
+    public List<Waypoint> GetWaypointsByTourOrder()
     {
-        if (string.IsNullOrEmpty(waypointId)) return;
-
-        for (int i = 0; i < activeVisuals.Count; i++)
-        {
-            WaypointVisual visual = activeVisuals[i];
-            if (visual == null)
-            {
-                continue;
-            }
-
-            Waypoint data = visual.GetWaypointData();
-            if (data != null && data.id == waypointId)
-            {
-                activeVisuals.RemoveAt(i);
-                Destroy(visual.gameObject);
-                return;
-            }
-        }
+        return waypoints
+            .Where(w => w.tourOrder >= 0)
+            .OrderBy(w => w.tourOrder)
+            .ToList();
     }
 
-    public void UpdateWaypointVisual(string waypointId)
+    /// <summary>
+    /// Get the WaypointVisual component for a given waypoint ID.
+    /// </summary>
+    public WaypointVisual GetVisualComponent(string waypointId)
     {
-        Waypoint waypoint = GetWaypoint(waypointId);
-        if (waypoint == null) return;
-
-        WaypointVisual visual = activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
-        if (visual != null)
-        {
-            visual.UpdateAppearance(waypoint);
-        }
+        return activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
     }
 }
