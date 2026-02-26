@@ -617,8 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Waypoints: []
-  WaypointFileName: Waypoints.json
-  jsonFileDev: {fileID: 0}
+  jsonFile: {fileID: 4900000, guid: 3d52f70bb79d4244286e9d682932641b, type: 3}
 --- !u!1 &506466205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,64 +1896,6 @@ MonoBehaviour:
   heightOffset: -25
   followCamera: 1
   startVisible: 1
---- !u!1 &2135164878
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2135164880}
-  - component: {fileID: 2135164879}
-  m_Layer: 0
-  m_Name: DevManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2135164879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135164878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82f60ad3bd6176943a43e68367129663, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  devModeEnabled: 1
-  devToggleAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Dev Toggle
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: b1059f18-444e-4d88-83b3-9b4979915ba1
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  playerCamera: {fileID: 0}
---- !u!4 &2135164880
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135164878}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.42187905, y: 0.024227938, z: 1.1194854}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1967,4 +1908,3 @@ SceneRoots:
   - {fileID: 1664254486}
   - {fileID: 1138551887}
   - {fileID: 1381332784}
-  - {fileID: 2135164880}
