@@ -35,7 +35,7 @@ public class WaypointListBuilder : MonoBehaviour
         return content;
     }
 
-    private WaypointList LoadWaypoints(string json)
+    private List<Waypoint> LoadWaypoints(string json)
     {
         WaypointList jsonIn = JsonUtility.FromJson<WaypointList>(json);
 
@@ -62,7 +62,7 @@ public class WaypointListBuilder : MonoBehaviour
 
             WaypointManager.Instance.CreateWaypoint(w);
         }
-        return jsonIn;
+        return jsonIn.Waypoints;
     }
 
     public void SaveWaypoints(List<Waypoint> wp)
@@ -78,10 +78,14 @@ public class WaypointListBuilder : MonoBehaviour
             Debug.LogError("WaypointListBuilder: WaypointManager.Instance not ready.");
             return;
         }
-        string json = LoadTextFromFile(WaypointFileName);
-        if(json != "")
+
+        if (!jsonFileDev)
         {
-            LoadWaypoints(json);
+            string json = LoadTextFromFile(WaypointFileName);
+            if(json != "")
+            {
+                LoadWaypoints(json);
+            }
         }
     }
 
@@ -102,8 +106,7 @@ public class WaypointListBuilder : MonoBehaviour
     {
         if(jsonFileDev)
         {
-            LoadWaypoints(jsonFileDev.text);
-            SaveWaypoints(Waypoints);
+            SaveWaypoints(LoadWaypoints(jsonFileDev.text));
             jsonFileDev = null;
         }
     }

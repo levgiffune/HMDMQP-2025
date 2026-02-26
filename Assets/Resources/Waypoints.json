@@ -1,26 +1,184 @@
-{"Waypoints":[
-    {"id": "1",
-    "name": "Novel Engineering of Swarm Technologies (NEST) 200C",
-    "desc": "The lab researches swarm robotics with a focus on coordination algorithms, software engineering, and human–swarm interaction.",
-    "position": {"x": -2.302501, "y": 0.2598864, "z": -6},
-    "rotation": {"x": 0, "y": 0, "z": 0, "w": 1},
-    "color": {"r": 0, "g": 1, "b": 0, "a": 1},
-    "tourOrder": 0,
-    "model": "NurseBot",
-    "modelName": "NurseBot",
-    "modelDesc": "A friendly nursing assistant robot designed to help with patient care and monitoring."},
-    {"id": "2",
-    "name": "Safe Autonomy and Intelligence Lab (SAIL) 200F",
-    "desc": "The SAIL Lab researches safety-critical control and trustworthy ML to create autonomous systems that are both intelligent and certifiable.",
-    "position": {"x": 1, "y": 0.6905681, "z": 3.181281},
-    "rotation": {"x": 0, "y": 0, "z": 0, "w": 1},
-    "color": {"r": 0, "g": 0, "b": 1, "a": 1},
-    "tourOrder": 1},
-    {"id": "3",
-    "name": "Manipulation and Environmental Robotics Lab (MER) 200D",
-    "desc": "The MER Lab advances robotic manipulation through vision, control, and machine learning, tackling environmental tasks like recycling and leading benchmarking in dexterous manipulation and active vision.",
-    "position": {"x": -1.149587, "y": 0.8003863, "z": -3.85508},
-    "rotation": {"x": 0, "y": 0, "z": 0, "w": 1},
-    "color": {"r": 1, "g": 0, "b": 0, "a": 1},
-    "tourOrder": 2}
-]}
+{
+    "Waypoints": [
+        {
+            "id": "0444c38f-44a7-40d2-8568-f7dcec2fd454",
+            "name": "200A",
+            "desc": "",
+            "position": {
+                "x": -5.436608791351318,
+                "y": 0.2868344783782959,
+                "z": 16.088212966918947
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "tourOrder": 0,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "d3f535c7-644b-48ed-a3de-1090c7f2c3ed",
+            "name": "200B",
+            "desc": "",
+            "position": {
+                "x": 2.5925652980804445,
+                "y": 0.33252695202827456,
+                "z": 15.90027141571045
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "tourOrder": 1,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "2f1a1c59-c15a-4f61-b9b2-8e461d8a7eb1",
+            "name": "200C",
+            "desc": "",
+            "position": {
+                "x": -0.3735269010066986,
+                "y": 0.31118932366371157,
+                "z": 10.341999053955079
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "tourOrder": 2,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "56795462-7f74-4e98-bbbd-156fe043c955",
+            "name": "200D",
+            "desc": "",
+            "position": {
+                "x": -0.7317922711372376,
+                "y": 0.33030402660369875,
+                "z": 4.296087265014648
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "tourOrder": 3,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "82fc5537-72a7-42a7-9cf6-25da588de4eb",
+            "name": "200F",
+            "desc": "",
+            "position": {
+                "x": 1.3488221168518067,
+                "y": 0.3222706615924835,
+                "z": -1.2739564180374146
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "tourOrder": 4,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "18193ea7-edff-4e2d-8fdb-096e05340553",
+            "name": "200E",
+            "desc": "",
+            "position": {
+                "x": -6.22683572769165,
+                "y": 0.31117239594459536,
+                "z": -0.4817385971546173
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "tourOrder": 5,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        }
+    ]
+}
