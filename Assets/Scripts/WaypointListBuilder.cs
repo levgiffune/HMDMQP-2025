@@ -1,21 +1,43 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 public class WaypointListBuilder : MonoBehaviour
 {
     public List<Waypoint> Waypoints;
-    public TextAsset jsonFile;
+    public string WaypointFileName;
+    public TextAsset jsonFileDev;
 
-    void Start()
-    {
-        if (WaypointManager.Instance == null)
-        {
-            Debug.LogError("WaypointListBuilder: WaypointManager.Instance not ready.");
-            return;
+    public static WaypointListBuilder Instance { get; private set; }
+    private void SaveTextToFile(string fileName, string content){
+        string filePath = Path.Combine(Application.persistentDataPath, fileName);
+        try{
+            File.WriteAllText(filePath, content);
+            Debug.Log($"Successfully wrote to file: {filePath}");
         }
+        catch (System.Exception e){
+            Debug.LogError($"Error writing to file {filePath}: {e.Message}");
+        }
+    }
 
-        WaypointList jsonIn = JsonUtility.FromJson<WaypointList>(jsonFile.text);
+    private string LoadTextFromFile(string fileName){
+        string filePath = Path.Combine(Application.persistentDataPath, fileName);
+        string content = "";
+
+        if (File.Exists(filePath)){
+            content = File.ReadAllText(filePath);
+            Debug.Log($"Successfully read from file: {filePath}");
+        }
+        else {
+            Debug.LogWarning($"File not found: {filePath}");
+        }
+        return content;
+    }
+
+    private WaypointList LoadWaypoints(string json)
+    {
+        WaypointList jsonIn = JsonUtility.FromJson<WaypointList>(json);
 
         Waypoints.AddRange(jsonIn.Waypoints);
 
@@ -39,6 +61,37 @@ public class WaypointListBuilder : MonoBehaviour
             }
 
             WaypointManager.Instance.CreateWaypoint(w);
+        }
+        return jsonIn;
+    }
+
+    public void SaveWaypoints(List<Waypoint> wp)
+    {
+        WaypointList w = new WaypointList {Waypoints = wp};
+        SaveTextToFile(WaypointFileName, JsonUtility.ToJson(w));
+    }
+
+    void Start()
+    {
+        if (WaypointManager.Instance == null)
+        {
+            Debug.LogError("WaypointListBuilder: WaypointManager.Instance not ready.");
+            return;
+        }
+        string json = LoadTextFromFile(WaypointFileName);
+        if(json != "")
+        {
+            LoadWaypoints(json);
+        }
+    }
+
+    void Update()
+    {
+        if(jsonFileDev)
+        {
+            LoadWaypoints(jsonFileDev.text);
+            SaveWaypoints(Waypoints);
+            jsonFileDev = null;
         }
     }
 }

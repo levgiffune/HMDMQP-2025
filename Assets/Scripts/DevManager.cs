@@ -17,11 +17,12 @@ public class DevManager : MonoBehaviour
             devToggleAction.action.performed += _ => SpawnWaypoint();
         }
     }
-
+    [ContextMenu("Spawn Waypoint")]
     void SpawnWaypoint()
     {
         Vector3 pos = playerCamera != null ? playerCamera.position : Vector3.zero;
         WaypointManager.Instance.CreateWaypoint(new Waypoint(pos));
         Debug.Log($"Dev waypoint created at {pos}");
+        WaypointListBuilder.Instance.SaveWaypoints(WaypointManager.Instance.Waypoints);
     }
 }
