@@ -23,6 +23,8 @@ public class DevManager : MonoBehaviour
         Vector3 pos = playerCamera != null ? playerCamera.position : Vector3.zero;
         WaypointManager.Instance.CreateWaypoint(new Waypoint(pos));
         Debug.Log($"Dev waypoint created at {pos}");
+        Debug.Log(WaypointManager.Instance);
+        Debug.Log( WaypointListBuilder.Instance);
         WaypointListBuilder.Instance.SaveWaypoints(WaypointManager.Instance.Waypoints);
     }
 }

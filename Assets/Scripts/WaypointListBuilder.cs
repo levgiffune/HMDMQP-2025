@@ -68,7 +68,7 @@ public class WaypointListBuilder : MonoBehaviour
     public void SaveWaypoints(List<Waypoint> wp)
     {
         WaypointList w = new WaypointList {Waypoints = wp};
-        SaveTextToFile(WaypointFileName, JsonUtility.ToJson(w));
+        SaveTextToFile(WaypointFileName, JsonUtility.ToJson(w, true));
     }
 
     void Start()
@@ -82,6 +82,19 @@ public class WaypointListBuilder : MonoBehaviour
         if(json != "")
         {
             LoadWaypoints(json);
+        }
+    }
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
