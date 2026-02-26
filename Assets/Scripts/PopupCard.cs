@@ -30,10 +30,7 @@ public class PopupCard : MonoBehaviour
         {
             canvas = gameObject.AddComponent<Canvas>();
         }
-    }
 
-    void Start()
-    {
         if (cameraTransform == null)
         {
             cameraTransform = Camera.main?.transform;
@@ -58,8 +55,8 @@ public class PopupCard : MonoBehaviour
             transform.Rotate(0, 180, 0);
         }
 
-        // B to close
-        if (OVRInput.GetDown(OVRInput.Button.Two))
+        // B to close (only for informational popups — action popups require A)
+        if (onACallback == null && OVRInput.GetDown(OVRInput.Button.Two))
         {
             Close();
         }

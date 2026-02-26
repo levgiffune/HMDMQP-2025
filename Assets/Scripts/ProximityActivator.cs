@@ -20,6 +20,7 @@ public class ProximityActivator : MonoBehaviour
     private Transform cameraTransform;
     private Waypoint waypointData;
     private bool isPlayerInRange = false;
+    private bool proximityEnabled = false;
 
     public bool IsPlayerInRange => isPlayerInRange;
 
@@ -27,6 +28,32 @@ public class ProximityActivator : MonoBehaviour
     {
         waypointData = waypoint;
         cameraTransform = playerCamera;
+    }
+
+    /// <summary>
+    /// Enable proximity detection for this waypoint.
+    /// If the player is already inside the radius, triggers content immediately.
+    /// </summary>
+    public void Activate()
+    {
+        proximityEnabled = true;
+        if (isPlayerInRange)
+        {
+            waypointVisual?.SetProximityActive(true);
+            OnPlayerEntered?.Invoke();
+        }
+    }
+
+    /// <summary>
+    /// Disable proximity detection. Hides content if the player is currently in range.
+    /// </summary>
+    public void Deactivate()
+    {
+        proximityEnabled = false;
+        if (isPlayerInRange)
+        {
+            waypointVisual?.SetProximityActive(false);
+        }
     }
 
     private void Update()
@@ -38,9 +65,8 @@ public class ProximityActivator : MonoBehaviour
 
         if (inRange && !isPlayerInRange)
         {
-            // Player entered range
             isPlayerInRange = true;
-            if (waypointVisual != null)
+            if (proximityEnabled && waypointVisual != null)
             {
                 waypointVisual.SetProximityActive(true);
             }
@@ -48,9 +74,8 @@ public class ProximityActivator : MonoBehaviour
         }
         else if (!inRange && isPlayerInRange)
         {
-            // Player exited range
             isPlayerInRange = false;
-            if (waypointVisual != null)
+            if (proximityEnabled && waypointVisual != null)
             {
                 waypointVisual.SetProximityActive(false);
             }

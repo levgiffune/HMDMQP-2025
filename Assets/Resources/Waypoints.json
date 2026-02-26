@@ -2,7 +2,7 @@
     {"id": "1",
     "name": "Novel Engineering of Swarm Technologies (NEST) 200C",
     "desc": "The lab researches swarm robotics with a focus on coordination algorithms, software engineering, and human–swarm interaction.",
-    "position": {"x": -2.302501, "y": 0.2598864, "z": -6},
+    "position": {"x": 0, "y": 0.2598864, "z": 0.5},
     "rotation": {"x": 0, "y": 0, "z": 0, "w": 1},
     "color": {"r": 0, "g": 1, "b": 0, "a": 1},
     "tourOrder": 0,

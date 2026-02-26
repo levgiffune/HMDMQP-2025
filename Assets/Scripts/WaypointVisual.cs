@@ -42,7 +42,14 @@ public class WaypointVisual : MonoBehaviour
         // Create diamond shape
         CreateDiamond(waypoint.color);
 
-        // Initialize description card (hidden by default)
+        // If descriptionCard is a prefab asset reference (not a scene instance), instantiate it
+        if (descriptionCard != null && !descriptionCard.gameObject.scene.IsValid())
+        {
+            GameObject cardGo = Instantiate(descriptionCard.gameObject);
+            cardGo.transform.position = waypoint.position;
+            descriptionCard = cardGo.GetComponent<DescriptionCard>();
+        }
+
         if (descriptionCard != null)
         {
             descriptionCard.Initialize(waypoint);
@@ -55,11 +62,25 @@ public class WaypointVisual : MonoBehaviour
             waypointModel.Initialize(waypoint, playerCamera, transform);
         }
 
-        // Initialize InfoCard with model data (only if model exists)
+        // If infoCard is a prefab asset reference, instantiate it (only if a model exists)
+        if (infoCard != null && !infoCard.gameObject.scene.IsValid() && !string.IsNullOrEmpty(waypoint.model))
+        {
+            GameObject cardGo = Instantiate(infoCard.gameObject);
+            cardGo.transform.position = waypoint.position;
+            infoCard = cardGo.GetComponent<InfoCard>();
+        }
+
         if (infoCard != null && !string.IsNullOrEmpty(waypoint.model))
         {
             infoCard.Initialize(waypoint);
             infoCard.gameObject.SetActive(false);
+        }
+
+        // Initialize proximity activator
+        ProximityActivator proximityActivator = GetComponent<ProximityActivator>();
+        if (proximityActivator != null)
+        {
+            proximityActivator.Initialize(waypoint, playerCamera);
         }
     }
 
@@ -69,6 +90,18 @@ public class WaypointVisual : MonoBehaviour
         {
             transform.LookAt(cameraTransform);
             transform.Rotate(0, 180, 0);
+
+            if (descriptionCard != null && descriptionCard.gameObject.activeSelf)
+            {
+                descriptionCard.transform.LookAt(cameraTransform);
+                descriptionCard.transform.Rotate(0, 180, 0);
+            }
+
+            if (infoCard != null && infoCard.gameObject.activeSelf)
+            {
+                infoCard.transform.LookAt(cameraTransform);
+                infoCard.transform.Rotate(0, 180, 0);
+            }
         }
     }
 

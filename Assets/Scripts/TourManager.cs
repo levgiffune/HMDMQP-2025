@@ -57,6 +57,7 @@ public class TourManager : MonoBehaviour
 
     private void StartTour()
     {
+        Debug.Log("[TourManager] Starting tour with waypoints: " + string.Join(", ", WaypointManager.Instance.Waypoints.ConvertAll(wp => wp.name)));
         tourWaypoints = WaypointManager.Instance.GetWaypointsByTourOrder();
 
         if (tourWaypoints.Count == 0)
@@ -95,7 +96,7 @@ public class TourManager : MonoBehaviour
             compass.Waypoint = visualObj;
         }
 
-        // Subscribe to proximity
+        // Subscribe to proximity and activate
         UnsubscribeCurrentProximity();
         if (visualObj != null)
         {
@@ -103,6 +104,7 @@ public class TourManager : MonoBehaviour
             if (currentProximityActivator != null)
             {
                 currentProximityActivator.OnPlayerEntered += OnReachedWaypoint;
+                currentProximityActivator.Activate();
             }
         }
     }
@@ -169,6 +171,7 @@ public class TourManager : MonoBehaviour
         if (currentProximityActivator != null)
         {
             currentProximityActivator.OnPlayerEntered -= OnReachedWaypoint;
+            currentProximityActivator.Deactivate();
             currentProximityActivator = null;
         }
     }

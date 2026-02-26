@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220b4d0c683f948479f2a7af7b414091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activationDistance: 2
+  activationDistance: 3
   waypointVisual: {fileID: 2118962177266844152}
 --- !u!1 &8765032624058385841
 GameObject:

@@ -33,6 +33,9 @@ public class FreeRoamMenu : MonoBehaviour
 
     void Update()
     {
+        if (listEntries.Count == 0 && WaypointManager.Instance != null && WaypointManager.Instance.Waypoints.Count > 0)
+            PopulateList();
+
         HandleThumbstickNav();
         HandleConfirm();
 
@@ -105,17 +108,28 @@ public class FreeRoamMenu : MonoBehaviour
     {
         if (index < 0 || index >= listEntries.Count) return;
 
+        // Hide previous selection's content
+        if (activeWaypointId != null)
+        {
+            WaypointVisual prevVisual = WaypointManager.Instance.GetVisualComponent(activeWaypointId);
+            prevVisual?.SetProximityActive(false);
+        }
+
         FreeRoamListEntry entry = listEntries[index];
         string waypointId = entry.WaypointId;
         activeWaypointId = waypointId;
 
-        // Update line connector
+        // Update line connector and compass
         GameObject visualObj = WaypointManager.Instance.GetWaypointVisual(waypointId);
         if (visualObj != null)
         {
             if (lineConnector != null) lineConnector.SetTarget(visualObj.transform);
             if (compass != null) compass.Waypoint = visualObj;
         }
+
+        // Show selected waypoint content
+        WaypointVisual visual = WaypointManager.Instance.GetVisualComponent(waypointId);
+        visual?.SetProximityActive(true);
 
         // Update active indicator
         for (int i = 0; i < listEntries.Count; i++)

@@ -73,13 +73,6 @@ public class IntroCard : MonoBehaviour
         {
             ConfirmSelection();
         }
-
-        // B to close (after selection is made — acts as "dismiss")
-        if (OVRInput.GetDown(OVRInput.Button.Two))
-        {
-            // B just closes if they've already seen the controls
-            gameObject.SetActive(false);
-        }
     }
 
     private void HandleNavigation()

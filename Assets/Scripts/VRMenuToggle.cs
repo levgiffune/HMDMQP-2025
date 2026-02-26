@@ -9,12 +9,12 @@ public class VRMenuToggle : MonoBehaviour
     void OnEnable()
     {
         toggleMenuAction.action.Enable();
-        toggleMenuAction.action.performed += OnToggleMenu;
+        toggleMenuAction.action.started += OnToggleMenu;
     }
 
     void OnDisable()
     {
-        toggleMenuAction.action.performed -= OnToggleMenu;
+        toggleMenuAction.action.started -= OnToggleMenu;
         toggleMenuAction.action.Disable();
     }
 
