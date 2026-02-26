@@ -10,6 +10,7 @@ public class WaypointLineConnector : MonoBehaviour
 
     [Header("Settings")]
     public float startHeightOffset = 0.5f;
+    public Color lineColor = Color.white;
 
     private Transform targetWaypoint;
 
@@ -43,6 +44,8 @@ public class WaypointLineConnector : MonoBehaviour
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
+        lineRenderer.startColor = lineColor;
+        lineRenderer.endColor = lineColor;
     }
 
     public void SetTarget(Transform waypoint)

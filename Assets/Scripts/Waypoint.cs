@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
-using TMPro;
 using UnityEngine.Video;
-
 
 [System.Serializable]
 public class Waypoint
@@ -15,40 +13,43 @@ public class Waypoint
     public Quaternion rotation;
 
     public Color color;
-    public WaypointIconType iconType;
 
-    [Header("Optional Media")]
-    public Texture2D imageRef;
-    public Texture2D[] images;
+    // Tour mode sequencing (-1 = not in tour)
+    public int tourOrder = -1;
+
+    // Model reference (loads from Resources by name)
+    public string model;
+    public string modelName;
+    public string modelDesc;
+
+    // Media / content references (optional)
+    public string[] imageNames;
+    [System.NonSerialized] public Texture2D[] images;
     public VideoClip videoClip;
-    public GameObject previewPrefab;
-
 
     public Waypoint(
         Color c,
         Vector3 p,
         string n = "New Waypoint", 
-        string d = null,
-        WaypointIconType i = WaypointIconType.Standard){
+        string d = null)
+    {
         id = Guid.NewGuid().ToString();
         position = p;
         name = n;
         desc = d;
         color = c;
-        iconType = i;
     }
 
     public Waypoint(
         Vector3 p, 
         string n = "New Waypoint", 
-        string d = null, 
-        WaypointIconType i = WaypointIconType.Standard){
+        string d = null)
+    {
         id = Guid.NewGuid().ToString();
         position = p;
         name = n;
         desc = d;
         color = Color.cyan;
-        iconType = i;
     }
 
     public float DistanceFrom(Vector3 otherPosition)
@@ -60,12 +61,4 @@ public class Waypoint
     {
         position = newPosition;
     }
-}
-
-[System.Serializable]
-public enum WaypointIconType
-{
-    Standard, 
-    POI, 
-    Warning
 }
