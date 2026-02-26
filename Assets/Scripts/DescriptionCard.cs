@@ -13,6 +13,7 @@ public class DescriptionCard : MonoBehaviour
     public RawImage carouselImage;
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI advancePrompt;
+    public TextMeshProUGUI titleText;
 
     [Header("Settings")]
     public float autoAdvanceInterval = 3f;
@@ -24,6 +25,11 @@ public class DescriptionCard : MonoBehaviour
     public void Initialize(Waypoint waypoint)
     {
         images = waypoint.images;
+
+        if (titleText != null)
+        {
+            titleText.text = waypoint.name ?? "";
+        }
 
         if (descriptionText != null)
         {
