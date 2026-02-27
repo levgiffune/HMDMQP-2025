@@ -82,11 +82,11 @@ public class PopupCard : MonoBehaviour
 
         if (aButtonPrompt != null)
         {
-            aButtonPrompt.SetActive(onA != null);
+            aButtonPrompt.SetActive(true);
         }
-        if (aButtonText != null && onA != null)
+        if (aButtonText != null)
         {
-            aButtonText.text = aText;
+            aButtonText.text = onA != null ? aText : "Press B to Close";
         }
 
         SetVisible(true);
