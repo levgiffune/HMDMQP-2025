@@ -10,8 +10,8 @@ public class WaypointModel : MonoBehaviour
 {
     [Header("Settings")]
     public Vector3 modelOffset = new Vector3(1f, 0f, 0f);
-    public float modelScale = 0.3f;
-    public Vector3 modelRotationOffset = new Vector3(0f, 180f, 0f);
+    public float modelScale = 20f;
+    public Vector3 modelRotationOffset = new Vector3(-90f, 0f, 0f);
 
     private Transform modelRoot;
     private GameObject modelInstance;
@@ -90,6 +90,7 @@ public class WaypointModel : MonoBehaviour
     }
 
     public bool HasModel => hasModel;
+    public Transform ModelRootTransform => modelRoot;
 
     private void SetRootActive(bool active)
     {

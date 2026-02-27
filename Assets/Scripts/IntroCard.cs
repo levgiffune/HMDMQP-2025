@@ -27,6 +27,7 @@ public class IntroCard : MonoBehaviour
     private int selectedOption = 0; // 0 = Tour, 1 = Free Roam
     private float thumbstickCooldown = 0f;
     private const float COOLDOWN_TIME = 0.3f;
+    private bool inputReady = false;
 
     void Awake()
     {
@@ -47,6 +48,7 @@ public class IntroCard : MonoBehaviour
     {
         if (canvas != null) canvas.enabled = true;
         selectedOption = 0;
+        inputReady = false;
         UpdateSelectionVisuals();
     }
 
@@ -63,6 +65,13 @@ public class IntroCard : MonoBehaviour
             transform.position = pos;
             transform.LookAt(cameraTransform);
             transform.Rotate(0, 180, 0);
+        }
+
+        // Skip input on first frame to avoid stale OVR button state from previous session
+        if (!inputReady)
+        {
+            inputReady = true;
+            return;
         }
 
         // Handle input

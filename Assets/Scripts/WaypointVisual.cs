@@ -80,6 +80,28 @@ public class WaypointVisual : MonoBehaviour
             infoCard.gameObject.SetActive(false);
         }
 
+        // Re-parent ModelRoot under InfoCard, retaining world scale and offset
+        if (waypointModel != null && infoCard != null && waypointModel.HasModel)
+        {
+            Transform root = waypointModel.ModelRootTransform;
+            Vector3 worldScale = root.lossyScale;
+            Vector3 localPos = root.localPosition; // modelOffset
+            root.SetParent(infoCard.transform, false);
+            // Compensate for InfoCard's canvas scale
+            Vector3 parentScale = infoCard.transform.lossyScale;
+            root.localScale = new Vector3(
+                worldScale.x / parentScale.x,
+                worldScale.y / parentScale.y,
+                worldScale.z / parentScale.z
+            );
+            // Compensate position so modelOffset works in world units
+            root.localPosition = new Vector3(
+                localPos.x / parentScale.x,
+                localPos.y / parentScale.y,
+                localPos.z / parentScale.z
+            );
+        }
+
         // Initialize proximity activator
         ProximityActivator proximityActivator = GetComponent<ProximityActivator>();
         if (proximityActivator != null)

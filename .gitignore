@@ -100,3 +100,5 @@ InitTestScene*.unity*
 
 # Presentation files (not part of project)
 /presentation/
+
+.claude
