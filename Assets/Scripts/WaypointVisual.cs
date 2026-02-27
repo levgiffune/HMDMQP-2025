@@ -17,6 +17,10 @@ public class WaypointVisual : MonoBehaviour
     public WaypointModel waypointModel;
     public InfoCard infoCard;
 
+    [Header("Layout")]
+    public float descriptionCardSideOffset = 1.5f;
+    public float infoCardSideOffset = 1.5f;
+
     [Header("Settings")]
     public bool billboardToCamera = true;
 
@@ -91,16 +95,29 @@ public class WaypointVisual : MonoBehaviour
             transform.LookAt(cameraTransform);
             transform.Rotate(0, 180, 0);
 
-            if (descriptionCard != null && descriptionCard.gameObject.activeSelf)
+            // Horizontal camera-right vector for left/right card offsets
+            Vector3 camRight = cameraTransform.right;
+            camRight.y = 0f;
+            if (camRight.sqrMagnitude > 0.001f) camRight.Normalize();
+
+            if (descriptionCard != null)
             {
-                descriptionCard.transform.LookAt(cameraTransform);
-                descriptionCard.transform.Rotate(0, 180, 0);
+                descriptionCard.transform.position = transform.position + camRight * descriptionCardSideOffset;
+                if (descriptionCard.gameObject.activeSelf)
+                {
+                    descriptionCard.transform.LookAt(cameraTransform);
+                    descriptionCard.transform.Rotate(0, 180, 0);
+                }
             }
 
-            if (infoCard != null && infoCard.gameObject.activeSelf)
+            if (infoCard != null)
             {
-                infoCard.transform.LookAt(cameraTransform);
-                infoCard.transform.Rotate(0, 180, 0);
+                infoCard.transform.position = transform.position - camRight * infoCardSideOffset;
+                if (infoCard.gameObject.activeSelf)
+                {
+                    infoCard.transform.LookAt(cameraTransform);
+                    infoCard.transform.Rotate(0, 180, 0);
+                }
             }
         }
     }

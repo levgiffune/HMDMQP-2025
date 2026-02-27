@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -84,5 +85,14 @@ public class WaypointManager : MonoBehaviour
     public WaypointVisual GetVisualComponent(string waypointId)
     {
         return activeVisuals.Find(v => v.GetWaypointData().id == waypointId);
+    }
+
+    public void SaveWaypoints(List<Waypoint> waypointsToSave)
+    {
+        WaypointList list = new WaypointList { Waypoints = waypointsToSave };
+        string json = JsonUtility.ToJson(list, true);
+        string path = Path.Combine(Application.dataPath, "Resources/Waypoints.json");
+        File.WriteAllText(path, json);
+        Debug.Log($"WaypointManager: Saved {waypointsToSave.Count} waypoints to {path}");
     }
 }

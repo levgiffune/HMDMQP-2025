@@ -10,6 +10,8 @@ public class WaypointModel : MonoBehaviour
 {
     [Header("Settings")]
     public Vector3 modelOffset = new Vector3(1f, 0f, 0f);
+    public float modelScale = 0.3f;
+    public Vector3 modelRotationOffset = new Vector3(0f, 180f, 0f);
 
     private Transform modelRoot;
     private GameObject modelInstance;
@@ -45,7 +47,8 @@ public class WaypointModel : MonoBehaviour
         // Instantiate the model prefab
         modelInstance = Instantiate(prefab, modelRoot);
         modelInstance.transform.localPosition = Vector3.zero;
-        modelInstance.transform.localRotation = Quaternion.identity;
+        modelInstance.transform.localRotation = Quaternion.Euler(modelRotationOffset);
+        modelInstance.transform.localScale = Vector3.one * modelScale;
 
         hasModel = true;
 
