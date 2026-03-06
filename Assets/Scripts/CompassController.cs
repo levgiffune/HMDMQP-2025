@@ -8,7 +8,7 @@ public class CompassManager : MonoBehaviour
     public RawImage CompassImage;
     public RawImage WaypointMarker;
     public GameObject Waypoint;
-    public float BaselineAzimuth = 210.0f;
+    public float BaselineAzimuth = 0f;
     private Transform xrHeadTransform;
 
     private void Awake()
