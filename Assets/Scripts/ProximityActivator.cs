@@ -69,6 +69,7 @@ public class ProximityActivator : MonoBehaviour
             if (proximityEnabled && waypointVisual != null)
             {
                 waypointVisual.SetProximityActive(true);
+                waypointVisual.descriptionCard.StartTTS();
             }
             OnPlayerEntered?.Invoke();
         }
