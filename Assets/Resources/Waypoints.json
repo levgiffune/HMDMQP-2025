@@ -23,8 +23,8 @@
             },
             "tourOrder": 0,
             "model": "NurseBotModel",
-            "modelName": "NurseBot",
-            "modelDesc": "A medical robot for assisting patients w/ VR controls",
+            "modelName": "Intelligent rObotic Nursing Asst",
+            "modelDesc": "IONA is a shared‑autonomy mobile humanoid robot designed to support remote nursing tasks. It features a height‑adjustable motorized chest, a compact 1700 mm frame with variable width, and AR/VR interfaces for flexible teleoperation.",
             "imageNames": [],
             "videoClip": {
                 "instanceID": 0
@@ -53,8 +53,8 @@
             },
             "tourOrder": 1,
             "model": "ELPIS",
-            "modelName": "ELPIS Robot",
-            "modelDesc": "Made in the ELPIS Lab",
+            "modelName": "7‑DoF Franka Emika Panda",
+            "modelDesc": "This robot is a compact, torque‑controlled manipulator known for its precision and smooth motion. In this work, it was used as the primary platform for evaluating motion‑planning performance in semi‑static environments.",
             "imageNames": [],
             "videoClip": {
                 "instanceID": 0
@@ -82,9 +82,9 @@
                 "a": 1.0
             },
             "tourOrder": 2,
-            "model": "",
-            "modelName": "",
-            "modelDesc": "",
+            "model": "NEST",
+            "modelName": "Swarm Robotics",
+            "modelDesc": "Swarm robotics explores how large groups of simple robots can coordinate through distributed control to maintain global connectivity while collectively covering and completing multiple tasks.",
             "imageNames": [],
             "videoClip": {
                 "instanceID": 0
@@ -113,8 +113,8 @@
             },
             "tourOrder": 3,
             "model": "MER",
-            "modelName": "MER Robot",
-            "modelDesc": "Made in the MER Lab",
+            "modelName": "Manipulation Robot",
+            "modelDesc": "The robot is a compliant, under‑actuated manipulator designed to execute human‑inspired dexterous picking skills, and in this work it was used to grasp difficult, cluttered, and obstructed objects using learned strategies that decide when and how each skill should be applied.",
             "imageNames": [],
             "videoClip": {
                 "instanceID": 0
@@ -142,9 +142,9 @@
                 "a": 1.0
             },
             "tourOrder": 4,
-            "model": "",
-            "modelName": "",
-            "modelDesc": "",
+            "model": "SAIL",
+            "modelName": "Autonomous Vehicle",
+            "modelDesc": "This lab explores the domain of intelligent transportation systems, to include autonomous vehicles, vessels, and flights. ",
             "imageNames": [],
             "videoClip": {
                 "instanceID": 0
@@ -172,9 +172,9 @@
                 "a": 1.0
             },
             "tourOrder": 5,
-            "model": "AVA",
-            "modelName": "AVA Robot",
-            "modelDesc": "Made in the AVA Lab",
+            "model": "AIR",
+            "modelName": "AIR Robot",
+            "modelDesc": "The robot is an adaptive manipulator designed to operate reliably in uncertain, changing environments, using real‑time perception, planning, and learning to perform tasks such as assembly, manipulation, and navigation in human‑centered settings.",
             "imageNames": [],
             "videoClip": {
                 "instanceID": 0
