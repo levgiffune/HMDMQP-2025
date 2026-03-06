@@ -1,26 +1,244 @@
-{"Waypoints":[
-    {"id": "1",
-    "name": "Novel Engineering of Swarm Technologies (NEST) 200C",
-    "desc": "The lab researches swarm robotics with a focus on coordination algorithms, software engineering, and human–swarm interaction.",
-    "position": {"x": 0, "y": 0.2598864, "z": 0.5},
-    "rotation": {"x": 0, "y": 0, "z": 0, "w": 1},
-    "color": {"r": 0, "g": 1, "b": 0, "a": 1},
-    "tourOrder": 0,
-    "model": "NurseBot",
-    "modelName": "NurseBot",
-    "modelDesc": "A friendly nursing assistant robot designed to help with patient care and monitoring."},
-    {"id": "2",
-    "name": "Safe Autonomy and Intelligence Lab (SAIL) 200F",
-    "desc": "The SAIL Lab researches safety-critical control and trustworthy ML to create autonomous systems that are both intelligent and certifiable.",
-    "position": {"x": 1, "y": 0.2598864, "z": 3.181281},
-    "rotation": {"x": 0, "y": 0, "z": 0, "w": 1},
-    "color": {"r": 0, "g": 0, "b": 1, "a": 1},
-    "tourOrder": 1},
-    {"id": "3",
-    "name": "Manipulation and Environmental Robotics Lab (MER) 200D",
-    "desc": "The MER Lab advances robotic manipulation through vision, control, and machine learning, tackling environmental tasks like recycling and leading benchmarking in dexterous manipulation and active vision.",
-    "position": {"x": -1.149587, "y": 0.2598864, "z": -3.85508},
-    "rotation": {"x": 0, "y": 0, "z": 0, "w": 1},
-    "color": {"r": 1, "g": 0, "b": 0, "a": 1},
-    "tourOrder": 2}
-]}
+{
+    "Waypoints": [
+        {
+            "id": "bde70a28-17f3-4ff5-ae44-9ca3a6cf4bdc",
+            "name": "200A - Human-inspired Robotics (HiRo) Lab",
+            "desc": "The lab creates intuitive shared-autonomy interfaces for mobile humanoid robots, advancing manipulation, adaptive interaction, AR communication, and teleoperator training.",
+            "position": {
+                "x": -8.836115837097168,
+                "y": 0.06988383829593659,
+                "z": -5.362915515899658
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "tourOrder": 0,
+            "model": "NurseBotModel",
+            "modelName": "NurseBot",
+            "modelDesc": "A medical robot for assisting patients w/ VR controls",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "fbd0401d-ef2c-40e4-b9d5-349656d2ef63",
+            "name": "200B - Efficient Learning and Planning for Intelligent Systems (ELPIS) Lab",
+            "desc": "The Lab builds autonomous robots that learn from the real world, advancing efficiency, robustness, and visual-based planning through the fusion of classical planning and modern machine learning.",
+            "position": {
+                "x": -8.699060440063477,
+                "y": 0.13361357152462007,
+                "z": 2.5915095806121828
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "tourOrder": 1,
+            "model": "ELPIS",
+            "modelName": "ELPIS Robot",
+            "modelDesc": "Made in the ELPIS Lab",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "d5705d93-f4bb-4c85-9a38-16825d9332b6",
+            "name": "200C - Novel Engineering for Swarm Technologies (NEST) Lab",
+            "desc": "The lab researches swarm robotics with a focus on coordination algorithms, software engineering, and human-swarm interaction.",
+            "position": {
+                "x": -2.8713529109954836,
+                "y": 0.09500224143266678,
+                "z": -0.45692721009254458
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "tourOrder": 2,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "ba21958c-8d11-4146-8558-efb54b5e7d0e",
+            "name": "200D - Manipulation and Environmental Robotics (MER) Lab",
+            "desc": "The MER Lab advances robotic manipulation through vision, control, and machine learning, tackling environmental tasks like recycling and leading benchmarking in dexterous manipulation and active vision.",
+            "position": {
+                "x": 3.130467414855957,
+                "y": 0.05571962893009186,
+                "z": -0.6369889378547669
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "tourOrder": 3,
+            "model": "MER",
+            "modelName": "MER Robot",
+            "modelDesc": "Made in the MER Lab",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "893f5191-821b-48b3-a541-decfe4976013",
+            "name": "200F - Safe Autonomy and Intelligence (SAIL) Lab",
+            "desc": "The SAIL Lab researches safety-critical control and trustworthy ML to create autonomous systems that are both intelligent and certifiable.Lab Number: 200F",
+            "position": {
+                "x": 9.0186185836792,
+                "y": 0.08421637117862702,
+                "z": 2.1658761501312258
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "tourOrder": 4,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "28061f48-95e1-41a1-a9d6-925d9bacb484",
+            "name": "200E - Adaptive and Intelligent Robotics (AIR) Lab",
+            "desc": "The AIR Lab studies adaptive robotic systems that use real-time perception, planning, and learning for assembly, manipulation, and navigation in human-centered and industrial environments.",
+            "position": {
+                "x": 8.903630256652832,
+                "y": 0.0701231136918068,
+                "z": -5.415943145751953
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "tourOrder": 5,
+            "model": "AVA",
+            "modelName": "AVA Robot",
+            "modelDesc": "Made in the AVA Lab",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "969179f7-6151-418d-86e9-16ede85a37df",
+            "name": "New Waypoint",
+            "desc": "",
+            "position": {
+                "x": 3.4802730083465578,
+                "y": -0.0724235400557518,
+                "z": 0.6711435914039612
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "tourOrder": -1,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        },
+        {
+            "id": "7bbc5ca6-1ee0-4283-81b7-cdf0df302f80",
+            "name": "New Waypoint",
+            "desc": "",
+            "position": {
+                "x": -8.222402572631836,
+                "y": -0.3463898301124573,
+                "z": 0.9966567158699036
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "color": {
+                "r": 0.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "tourOrder": -1,
+            "model": "",
+            "modelName": "",
+            "modelDesc": "",
+            "imageNames": [],
+            "videoClip": {
+                "instanceID": 0
+            }
+        }
+    ]
+}

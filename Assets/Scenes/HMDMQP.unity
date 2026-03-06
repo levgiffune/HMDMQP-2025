@@ -567,6 +567,7 @@ GameObject:
   - component: {fileID: 481556167}
   - component: {fileID: 481556166}
   - component: {fileID: 481556168}
+  - component: {fileID: 481556169}
   m_Layer: 0
   m_Name: WaypointManager
   m_TagString: Untagged
@@ -617,7 +618,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Waypoints: []
-  jsonFile: {fileID: 4900000, guid: 3d52f70bb79d4244286e9d682932641b, type: 3}
+  WaypointFileName: Waypoints.json
+  jsonFileDev: {fileID: 4900000, guid: 3d52f70bb79d4244286e9d682932641b, type: 3}
+--- !u!114 &481556169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481556165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f60ad3bd6176943a43e68367129663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  devModeEnabled: 1
+  devToggleAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Dev Toggle
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 4b014f65-960c-4dca-a46f-2a8ac23d90b9
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 56955031-9e23-4975-ae47-f9568f3c638a
+        m_Path: <XRController>{RightHand}/gripPressed
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Dev Toggle
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  playerCamera: {fileID: 1203234341}
 --- !u!1 &506466205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,72 +1689,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef34b047f0ba8e64b9d3031200a4de80, type: 3}
---- !u!1 &1231415144
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1231415146}
-  - component: {fileID: 1231415145}
-  m_Layer: 0
-  m_Name: DevManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1231415145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1231415144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82f60ad3bd6176943a43e68367129663, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  devModeEnabled: 0
-  devToggleAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Dev Toggle
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 0a118a27-1439-40c2-b67b-5886fffc9e2e
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings:
-      - m_Name: 
-        m_Id: e8734a7d-12be-4792-8ced-3db7fab22097
-        m_Path: <XRController>{RightHand}/{SecondaryButton}
-        m_Interactions: 
-        m_Processors: 
-        m_Groups: 
-        m_Action: Dev Toggle
-        m_Flags: 0
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  playerCamera: {fileID: 1203234341}
---- !u!4 &1231415146
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1231415144}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.12659998, z: 1.21}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1381332782
 GameObject:
   m_ObjectHideFlags: 0
@@ -2218,6 +2188,5 @@ SceneRoots:
   - {fileID: 1664254486}
   - {fileID: 1381332784}
   - {fileID: 1138551887}
-  - {fileID: 1231415146}
   - {fileID: 1222162485}
   - {fileID: 715701929}

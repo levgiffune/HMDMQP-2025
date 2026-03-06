@@ -94,7 +94,7 @@ public class IntroCard : MonoBehaviour
 
         Vector2 thumbstick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
 
-        if (thumbstick.y > 0.5f || thumbstick.y < -0.5f)
+        if (thumbstick.x > 0.5f || thumbstick.x < -0.5f)
         {
             selectedOption = (selectedOption == 0) ? 1 : 0;
             thumbstickCooldown = COOLDOWN_TIME;
