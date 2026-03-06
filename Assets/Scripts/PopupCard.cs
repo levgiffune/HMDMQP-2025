@@ -92,7 +92,7 @@ public class PopupCard : MonoBehaviour
         }
 
         SetVisible(true);
-        speaker.Speak(message);
+        speaker.SpeakQueued(message);
     }
 
     public void Close()

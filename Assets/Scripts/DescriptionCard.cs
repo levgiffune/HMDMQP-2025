@@ -26,13 +26,10 @@ public class DescriptionCard : MonoBehaviour
 
     public void StartTTS()
     {
-        speaker.Speak(descriptionText.text);
+        speaker.SpeakQueued(titleText.text);
+        speaker.SpeakQueued(descriptionText.text);
     }
 
-    public void StopTTS()
-    {
-        speaker.Stop();
-    }
     public void Initialize(Waypoint waypoint)
     {
         images = waypoint.images;

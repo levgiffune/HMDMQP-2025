@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using TMPro;
+using Meta.WitAi.TTS.Utilities;
 
 /// <summary>
 /// First-time intro screen. Shows controls overview and lets user choose Tour or Free Roam.
@@ -13,6 +14,7 @@ public class IntroCard : MonoBehaviour
     public GameObject freeRoamOption;
     public TextMeshProUGUI tourLabel;
     public TextMeshProUGUI freeRoamLabel;
+    public TTSSpeaker speaker;
 
     [Header("Selection Visuals")]
     public Color highlightColor = Color.yellow;
@@ -48,6 +50,7 @@ public class IntroCard : MonoBehaviour
         if (canvas != null) canvas.enabled = true;
         selectedOption = 0;
         UpdateSelectionVisuals();
+        speaker.SpeakQueued(controlsText.text);
     }
 
     void Update()
@@ -90,6 +93,14 @@ public class IntroCard : MonoBehaviour
             selectedOption = (selectedOption == 0) ? 1 : 0;
             thumbstickCooldown = COOLDOWN_TIME;
             UpdateSelectionVisuals();
+            if(selectedOption == 0)
+            {
+                speaker.SpeakQueued(tourLabel.text);
+            }
+            else
+            {
+                speaker.SpeakQueued(freeRoamLabel.text);
+            }
         }
     }
 
@@ -105,7 +116,6 @@ public class IntroCard : MonoBehaviour
 
         GameMode mode = (selectedOption == 0) ? GameMode.Tour : GameMode.FreeRoam;
         GameModeManager.Instance.SetMode(mode);
-
         gameObject.SetActive(false);
     }
 }
