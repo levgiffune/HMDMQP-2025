@@ -36,6 +36,7 @@ RectTransform:
   - {fileID: 7931388405756245861}
   - {fileID: 5824548945931860641}
   - {fileID: 4326245870620639912}
+  - {fileID: 6472321359036809805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -88,7 +89,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &6529976581422847453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,10 +254,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Welcome!
 
-    Use the Thumbstick UP/DOWN to Navigate
+    Use the left Thumbstick LEFT/RIGHT to Navigate
 
-    (A) Button to
-    Select '
+    (A)
+    Button to Select '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 052121732ddbc334ba22b7a08c8b884c, type: 2}
   m_sharedMaterial: {fileID: -6822865152330955194, guid: 052121732ddbc334ba22b7a08c8b884c, type: 2}
