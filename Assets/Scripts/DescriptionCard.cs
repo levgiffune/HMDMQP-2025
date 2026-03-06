@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Meta.WitAi.TTS.Utilities;
 
 /// <summary>
 /// At-waypoint description card with image carousel and text.
@@ -14,7 +15,8 @@ public class DescriptionCard : MonoBehaviour
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI advancePrompt;
     public TextMeshProUGUI titleText;
-
+    public TTSSpeaker speaker;
+    
     [Header("Settings")]
     public float autoAdvanceInterval = 3f;
 
@@ -22,6 +24,15 @@ public class DescriptionCard : MonoBehaviour
     private int currentImageIndex = 0;
     private float autoAdvanceTimer = 0f;
 
+    public void StartTTS()
+    {
+        speaker.Speak(descriptionText.text);
+    }
+
+    public void StopTTS()
+    {
+        speaker.Stop();
+    }
     public void Initialize(Waypoint waypoint)
     {
         images = waypoint.images;

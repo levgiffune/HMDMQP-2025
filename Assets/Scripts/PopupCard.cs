@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using TMPro;
+using Meta.WitAi.TTS.Utilities;
 
 /// <summary>
 /// Reusable popup card for tour transitions and announcements.
@@ -13,6 +14,7 @@ public class PopupCard : MonoBehaviour
     public TextMeshProUGUI messageText;
     public GameObject aButtonPrompt;
     public TextMeshProUGUI aButtonText;
+    public TTSSpeaker speaker;
 
     [Header("Positioning")]
     public float distanceFromCamera = 1.5f;
@@ -90,12 +92,14 @@ public class PopupCard : MonoBehaviour
         }
 
         SetVisible(true);
+        speaker.Speak(message);
     }
 
     public void Close()
     {
         onACallback = null;
         SetVisible(false);
+        speaker.Stop();
     }
 
     private void SetVisible(bool visible)
