@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Video;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -57,6 +58,16 @@ public class WaypointListBuilder : MonoBehaviour
                 if (failed > 0)
                 {
                     Debug.LogWarning($"WaypointListBuilder: {failed} image(s) not found in Resources for waypoint '{w.name}'.");
+                }
+            }
+
+            // Load video clip from Resources by name
+            if (!string.IsNullOrEmpty(w.videoClipName))
+            {
+                w.videoClip = Resources.Load<VideoClip>(w.videoClipName);
+                if (w.videoClip == null)
+                {
+                    Debug.LogWarning($"WaypointListBuilder: Video clip '{w.videoClipName}' not found in Resources for waypoint '{w.name}'.");
                 }
             }
 
