@@ -544,9 +544,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleText: {fileID: 2247998736182526575}
-  messageText: {fileID: 0}
-  aButtonPrompt: {fileID: 0}
-  aButtonText: {fileID: 0}
+  messageText: {fileID: 3006970534110365193}
+  aButtonPrompt: {fileID: 7434202434450058553}
+  aButtonText: {fileID: 3301102612398353822}
   speaker: {fileID: 9222864353443805587}
   distanceFromCamera: 1.5
   heightOffset: 0

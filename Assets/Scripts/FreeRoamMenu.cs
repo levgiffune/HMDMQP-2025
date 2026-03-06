@@ -25,10 +25,27 @@ public class FreeRoamMenu : MonoBehaviour
 
     private List<FreeRoamListEntry> listEntries = new List<FreeRoamListEntry>();
     private string activeWaypointId = null;
+    private ProximityActivator activeProximityActivator = null;
 
     void OnEnable()
     {
         PopulateList();
+    }
+
+    void OnDisable()
+    {
+        if (activeProximityActivator != null)
+        {
+            activeProximityActivator.Deactivate();
+            activeProximityActivator = null;
+        }
+
+        if (activeWaypointId != null)
+        {
+            WaypointVisual visual = WaypointManager.Instance?.GetVisualComponent(activeWaypointId);
+            visual?.SetProximityActive(false);
+            activeWaypointId = null;
+        }
     }
 
     void Update()
@@ -108,6 +125,13 @@ public class FreeRoamMenu : MonoBehaviour
     {
         if (index < 0 || index >= listEntries.Count) return;
 
+        // Deactivate previous proximity activator
+        if (activeProximityActivator != null)
+        {
+            activeProximityActivator.Deactivate();
+            activeProximityActivator = null;
+        }
+
         // Hide previous selection's content
         if (activeWaypointId != null)
         {
@@ -125,11 +149,14 @@ public class FreeRoamMenu : MonoBehaviour
         {
             if (lineConnector != null) lineConnector.SetTarget(visualObj.transform);
             if (compass != null) compass.Waypoint = visualObj;
-        }
 
-        // Show selected waypoint content
-        WaypointVisual visual = WaypointManager.Instance.GetVisualComponent(waypointId);
-        visual?.SetProximityActive(true);
+            // Activate proximity detection so content shows when player walks close
+            activeProximityActivator = visualObj.GetComponent<ProximityActivator>();
+            if (activeProximityActivator != null)
+            {
+                activeProximityActivator.Activate();
+            }
+        }
 
         // Update active indicator
         for (int i = 0; i < listEntries.Count; i++)

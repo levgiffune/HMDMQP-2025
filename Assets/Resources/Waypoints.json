@@ -25,10 +25,12 @@
             "model": "NurseBotModel",
             "modelName": "Intelligent rObotic Nursing Asst",
             "modelDesc": "IONA is a shared‑autonomy mobile humanoid robot designed to support remote nursing tasks. It features a height‑adjustable motorized chest, a compact 1700 mm frame with variable width, and AR/VR interfaces for flexible teleoperation.",
-            "imageNames": [],
-            "videoClip": {
-                "instanceID": 0
-            }
+            "imageNames": [
+                "Jane - HiRo",
+                "Guy -  HiRO",
+                "CoolShot - HiRo"
+            ],
+            "videoClipName": ""
         },
         {
             "id": "fbd0401d-ef2c-40e4-b9d5-349656d2ef63",
@@ -55,10 +57,13 @@
             "model": "ELPIS",
             "modelName": "7‑DoF Franka Emika Panda",
             "modelDesc": "This robot is a compact, torque‑controlled manipulator known for its precision and smooth motion. In this work, it was used as the primary platform for evaluating motion‑planning performance in semi‑static environments.",
-            "imageNames": [],
-            "videoClip": {
-                "instanceID": 0
-            }
+            "imageNames": [
+                "Constantinos- ELPIS",
+                "TeamPhoto1 - ELPIS",
+                "TeamPhoto2 - ELPIS",
+                "Presentation - ELPIS"
+            ],
+            "videoClipName": ""
         },
         {
             "id": "d5705d93-f4bb-4c85-9a38-16825d9332b6",
@@ -82,13 +87,16 @@
                 "a": 1.0
             },
             "tourOrder": 2,
-            "model": "NEST",
+            "model": "",
             "modelName": "Swarm Robotics",
             "modelDesc": "Swarm robotics explores how large groups of simple robots can coordinate through distributed control to maintain global connectivity while collectively covering and completing multiple tasks.",
-            "imageNames": [],
-            "videoClip": {
-                "instanceID": 0
-            }
+            "imageNames": [
+                "Carlo - NEST",
+                "GroupPhoto - NEST",
+                "FunkyGraphic - NEST",
+                "SomethingUhhh - NEST"
+            ],
+            "videoClipName": ""
         },
         {
             "id": "ba21958c-8d11-4146-8558-efb54b5e7d0e",
@@ -115,10 +123,12 @@
             "model": "MER",
             "modelName": "Manipulation Robot",
             "modelDesc": "The robot is a compliant, under‑actuated manipulator designed to execute human‑inspired dexterous picking skills, and in this work it was used to grasp difficult, cluttered, and obstructed objects using learned strategies that decide when and how each skill should be applied.",
-            "imageNames": [],
-            "videoClip": {
-                "instanceID": 0
-            }
+            "imageNames": [
+                "Berk - MER",
+                "RobotStuff1 - MER",
+                "RobotStuff2 - MER"
+            ],
+            "videoClipName": "Video - MER"
         },
         {
             "id": "893f5191-821b-48b3-a541-decfe4976013",
@@ -142,13 +152,14 @@
                 "a": 1.0
             },
             "tourOrder": 4,
-            "model": "SAIL",
+            "model": "",
             "modelName": "Autonomous Vehicle",
             "modelDesc": "This lab explores the domain of intelligent transportation systems, to include autonomous vehicles, vessels, and flights. ",
-            "imageNames": [],
-            "videoClip": {
-                "instanceID": 0
-            }
+            "imageNames": [
+                "Wei - SAIL",
+                "Diagram - SAIL"
+            ],
+            "videoClipName": ""
         },
         {
             "id": "28061f48-95e1-41a1-a9d6-925d9bacb484",
@@ -172,73 +183,14 @@
                 "a": 1.0
             },
             "tourOrder": 5,
-            "model": "AIR",
+            "model": "AVA",
             "modelName": "AIR Robot",
             "modelDesc": "The robot is an adaptive manipulator designed to operate reliably in uncertain, changing environments, using real‑time perception, planning, and learning to perform tasks such as assembly, manipulation, and navigation in human‑centered settings.",
-            "imageNames": [],
-            "videoClip": {
-                "instanceID": 0
-            }
-        },
-        {
-            "id": "969179f7-6151-418d-86e9-16ede85a37df",
-            "name": "New Waypoint",
-            "desc": "",
-            "position": {
-                "x": 3.4802730083465578,
-                "y": -0.0724235400557518,
-                "z": 0.6711435914039612
-            },
-            "rotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 0.0
-            },
-            "color": {
-                "r": 0.0,
-                "g": 1.0,
-                "b": 1.0,
-                "a": 1.0
-            },
-            "tourOrder": -1,
-            "model": "",
-            "modelName": "",
-            "modelDesc": "",
-            "imageNames": [],
-            "videoClip": {
-                "instanceID": 0
-            }
-        },
-        {
-            "id": "7bbc5ca6-1ee0-4283-81b7-cdf0df302f80",
-            "name": "New Waypoint",
-            "desc": "",
-            "position": {
-                "x": -8.222402572631836,
-                "y": -0.3463898301124573,
-                "z": 0.9966567158699036
-            },
-            "rotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 0.0
-            },
-            "color": {
-                "r": 0.0,
-                "g": 1.0,
-                "b": 1.0,
-                "a": 1.0
-            },
-            "tourOrder": -1,
-            "model": "",
-            "modelName": "",
-            "modelDesc": "",
-            "imageNames": [],
-            "videoClip": {
-                "instanceID": 0
-            }
+            "imageNames": [
+                "Jing - AIR",
+                "GroupPhoto- AIR"
+            ],
+            "videoClipName": ""
         }
     ]
 }

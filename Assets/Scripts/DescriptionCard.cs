@@ -83,6 +83,7 @@ public class DescriptionCard : MonoBehaviour
         videoPlayer.targetTexture = videoRenderTexture;
         videoPlayer.isLooping = true;
         videoPlayer.playOnAwake = false;
+        videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
         videoPlayer.Stop();
     }
 
