@@ -25,7 +25,8 @@ public class Waypoint
     // Media / content references (optional)
     public string[] imageNames;
     [System.NonSerialized] public Texture2D[] images;
-    public VideoClip videoClip;
+    public string videoClipName;
+    [System.NonSerialized] public VideoClip videoClip;
 
     public Waypoint(
         Color c,

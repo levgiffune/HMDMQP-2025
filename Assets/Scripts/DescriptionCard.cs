@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using TMPro;
 using Meta.WitAi.TTS.Utilities;
 
@@ -7,6 +8,7 @@ using Meta.WitAi.TTS.Utilities;
 /// At-waypoint description card with image carousel and text.
 /// Shows "Press A to move on" in Tour Mode.
 /// Shown/hidden by ProximityActivator via WaypointVisual.
+/// Video clips are treated as the last slide in the carousel.
 /// </summary>
 public class DescriptionCard : MonoBehaviour
 {
@@ -21,7 +23,7 @@ public class DescriptionCard : MonoBehaviour
     public float autoAdvanceInterval = 3f;
 
     private Texture2D[] images;
-    private int currentImageIndex = 0;
+    private int currentMediaIndex = 0;
     private float autoAdvanceTimer = 0f;
 
     public void StartTTS()
@@ -29,10 +31,20 @@ public class DescriptionCard : MonoBehaviour
         speaker.SpeakQueued(titleText.text);
         speaker.SpeakQueued(descriptionText.text);
     }
+    // Video support
+    private VideoPlayer videoPlayer;
+    private RenderTexture videoRenderTexture;
+    private VideoClip videoClip;
+    private int imageCount;
+    private int totalMediaCount;
 
     public void Initialize(Waypoint waypoint)
     {
         images = waypoint.images;
+        videoClip = waypoint.videoClip;
+
+        imageCount = (images != null) ? images.Length : 0;
+        totalMediaCount = imageCount + (videoClip != null ? 1 : 0);
 
         if (titleText != null)
         {
@@ -44,14 +56,34 @@ public class DescriptionCard : MonoBehaviour
             descriptionText.text = waypoint.desc ?? "";
         }
 
-        currentImageIndex = 0;
-        UpdateCarouselImage();
+        if (videoClip != null)
+        {
+            SetupVideoPlayer();
+        }
+
+        currentMediaIndex = 0;
+        UpdateCarouselMedia();
 
         // Tour mode prompt — controlled externally
         if (advancePrompt != null)
         {
             advancePrompt.gameObject.SetActive(false);
         }
+    }
+
+    private void SetupVideoPlayer()
+    {
+        videoPlayer = GetComponent<VideoPlayer>();
+        if (videoPlayer == null)
+            videoPlayer = gameObject.AddComponent<VideoPlayer>();
+
+        videoRenderTexture = new RenderTexture(1920, 1080, 0);
+        videoPlayer.clip = videoClip;
+        videoPlayer.renderMode = VideoRenderMode.RenderTexture;
+        videoPlayer.targetTexture = videoRenderTexture;
+        videoPlayer.isLooping = true;
+        videoPlayer.playOnAwake = false;
+        videoPlayer.Stop();
     }
 
     /// <summary>
@@ -67,46 +99,91 @@ public class DescriptionCard : MonoBehaviour
 
     void Update()
     {
-        if (images == null || images.Length <= 1) return;
+        if (totalMediaCount <= 1) return;
+        // Don't auto-advance away from the video slide
+        if (IsVideoSlide(currentMediaIndex)) return;
 
         autoAdvanceTimer += Time.deltaTime;
         if (autoAdvanceTimer >= autoAdvanceInterval)
         {
-            NextImage();
+            NextMedia();
             autoAdvanceTimer = 0f;
         }
     }
 
-    public void NextImage()
+    private bool IsVideoSlide(int index)
     {
-        if (images == null || images.Length == 0) return;
-        currentImageIndex = (currentImageIndex + 1) % images.Length;
-        UpdateCarouselImage();
+        return videoClip != null && index == imageCount;
     }
 
-    public void PreviousImage()
+    public void NextMedia()
     {
-        if (images == null || images.Length == 0) return;
-        currentImageIndex = (currentImageIndex - 1 + images.Length) % images.Length;
-        UpdateCarouselImage();
+        if (totalMediaCount == 0) return;
+        currentMediaIndex = (currentMediaIndex + 1) % totalMediaCount;
+        UpdateCarouselMedia();
     }
 
-    private void UpdateCarouselImage()
+    public void PreviousMedia()
     {
-        if (carouselImage == null || images == null || images.Length == 0)
+        if (totalMediaCount == 0) return;
+        currentMediaIndex = (currentMediaIndex - 1 + totalMediaCount) % totalMediaCount;
+        UpdateCarouselMedia();
+    }
+
+    // Keep old names working for any external callers
+    public void NextImage() => NextMedia();
+    public void PreviousImage() => PreviousMedia();
+
+    private void UpdateCarouselMedia()
+    {
+        if (carouselImage == null || totalMediaCount == 0)
         {
             if (carouselImage != null) carouselImage.gameObject.SetActive(false);
+            StopVideo();
             return;
         }
 
-        if (currentImageIndex >= 0 && currentImageIndex < images.Length && images[currentImageIndex] != null)
+        if (IsVideoSlide(currentMediaIndex))
         {
-            carouselImage.texture = images[currentImageIndex];
+            // Show video
+            carouselImage.texture = videoRenderTexture;
+            carouselImage.gameObject.SetActive(true);
+            PlayVideo();
+        }
+        else if (currentMediaIndex >= 0 && currentMediaIndex < imageCount && images[currentMediaIndex] != null)
+        {
+            // Show image
+            StopVideo();
+            carouselImage.texture = images[currentMediaIndex];
             carouselImage.gameObject.SetActive(true);
         }
         else
         {
+            StopVideo();
             carouselImage.gameObject.SetActive(false);
+        }
+
+        autoAdvanceTimer = 0f;
+    }
+
+    private void PlayVideo()
+    {
+        if (videoPlayer != null && !videoPlayer.isPlaying)
+            videoPlayer.Play();
+    }
+
+    private void StopVideo()
+    {
+        if (videoPlayer != null && videoPlayer.isPlaying)
+            videoPlayer.Stop();
+    }
+
+    void OnDestroy()
+    {
+        if (videoRenderTexture != null)
+        {
+            videoRenderTexture.Release();
+            Destroy(videoRenderTexture);
         }
     }
 }
