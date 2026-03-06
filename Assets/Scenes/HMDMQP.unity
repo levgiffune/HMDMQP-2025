@@ -618,7 +618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Waypoints: []
   WaypointFileName: 
-  jsonFileDev: {fileID: 0}
+  jsonFileDev: {fileID: 4900000, guid: 3d52f70bb79d4244286e9d682932641b, type: 3}
 --- !u!1 &506466205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,7 +1194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdf44c6c7091fc24ba3d16b7fd57330a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  introCard: {fileID: 6529976581422847453, guid: ef34b047f0ba8e64b9d3031200a4de80, type: 3}
+  introCard: {fileID: 2089198947}
   tourManager: {fileID: 1381332783}
   freeRoamMenu: {fileID: 782108204}
   vrMenu: {fileID: 1176258622}
@@ -1719,9 +1719,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 643315271007361654, guid: ef34b047f0ba8e64b9d3031200a4de80, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1313076080362187290, guid: ef34b047f0ba8e64b9d3031200a4de80, type: 3}
       propertyPath: m_Name
       value: IntroCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313076080362187290, guid: ef34b047f0ba8e64b9d3031200a4de80, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5020945544588978662, guid: ef34b047f0ba8e64b9d3031200a4de80, type: 3}
       propertyPath: m_Pivot.x
@@ -2145,7 +2153,7 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
   RequestSettings:
-    _configuration: {fileID: 11400000, guid: 168f4dca0321a354197b781ed045c3e0, type: 2}
+    _configuration: {fileID: 11400000, guid: 713666dd12069be49a68a5bfdc506047, type: 2}
     audioType: 1
     audioStream: 1
     useEvents: 1
@@ -2674,6 +2682,17 @@ MonoBehaviour:
   heightOffset: -25
   followCamera: 1
   startVisible: 1
+--- !u!114 &2089198947 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6529976581422847453, guid: ef34b047f0ba8e64b9d3031200a4de80, type: 3}
+  m_PrefabInstance: {fileID: 1222162485}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba0a47a51a64af4696438c352350ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
