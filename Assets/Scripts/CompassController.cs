@@ -8,6 +8,7 @@ public class CompassManager : MonoBehaviour
     public RawImage CompassImage;
     public RawImage WaypointMarker;
     public GameObject Waypoint;
+    public float BaselineAzimuth = 210.0f;
     private Transform xrHeadTransform;
 
     private void Awake()
@@ -47,7 +48,7 @@ public class CompassManager : MonoBehaviour
         }
 
         float yaw = xrHeadTransform.rotation.eulerAngles.y;
-        Vector2 compassUvPosition = Vector2.right * (yaw / 360f);
+        Vector2 compassUvPosition = Vector2.right * ((yaw+BaselineAzimuth) / 360f);
         CompassImage.uvRect = new Rect(compassUvPosition, Vector2.one);
 
         if (Waypoint == null)
