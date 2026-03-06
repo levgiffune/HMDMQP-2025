@@ -6,7 +6,7 @@
             "desc": "The lab creates intuitive shared-autonomy interfaces for mobile humanoid robots, advancing manipulation, adaptive interaction, AR communication, and teleoperator training.",
             "position": {
                 "x": -8.836115837097168,
-                "y": 0.06988383829593658,
+                "y": 0.06988383829593659,
                 "z": -5.362915515899658
             },
             "rotation": {
@@ -38,8 +38,8 @@
             "desc": "The Lab builds autonomous robots that learn from the real world, advancing efficiency, robustness, and visual-based planning through the fusion of classical planning and modern machine learning.",
             "position": {
                 "x": -8.699060440063477,
-                "y": 0.13361357152462006,
-                "z": 2.5915095806121826
+                "y": 0.13361357152462007,
+                "z": 2.5915095806121828
             },
             "rotation": {
                 "x": 0.0,
@@ -70,9 +70,9 @@
             "name": "200C - Novel Engineering for Swarm Technologies (NEST) Lab",
             "desc": "The lab researches swarm robotics with a focus on coordination algorithms, software engineering, and human-swarm interaction.",
             "position": {
-                "x": -2.8713529109954834,
+                "x": -2.8713529109954836,
                 "y": 0.09500224143266678,
-                "z": -0.45692721009254456
+                "z": -0.45692721009254458
             },
             "rotation": {
                 "x": 0.0,
@@ -105,7 +105,7 @@
             "position": {
                 "x": 3.130467414855957,
                 "y": 0.05571962893009186,
-                "z": -0.6369889378547668
+                "z": -0.6369889378547669
             },
             "rotation": {
                 "x": 0.0,
@@ -136,8 +136,8 @@
             "desc": "The SAIL Lab researches safety-critical control and trustworthy ML to create autonomous systems that are both intelligent and certifiable.Lab Number: 200F",
             "position": {
                 "x": 9.0186185836792,
-                "y": 0.08421637117862701,
-                "z": 2.1658761501312256
+                "y": 0.08421637117862702,
+                "z": 2.1658761501312258
             },
             "rotation": {
                 "x": 0.0,
